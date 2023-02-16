@@ -1,15 +1,16 @@
 import sys
 from PyQt6.QtWidgets import *
 from data.database import get_login
+import frame
 
 
 class Login:
     username: QLineEdit
     password: QLineEdit
-    frame: QWidget
+    f: QWidget
 
-    def __init__(self, frame) -> QWidget:
-        Login.frame = self.frame = frame
+    def __init__(self, fr):
+        Login.f = fr
 
         hlayout = QHBoxLayout()
         layout = QFormLayout()
@@ -37,14 +38,16 @@ class Login:
 
         layout.addRow(hlayout)
 
-        frame.setLayout(layout)
+        Login.f.setLayout(layout)
 
     class __Function():
 
         @ staticmethod
-        def do(self):
+        def do():
             if get_login(Login.username.text(), Login.password.text()):
                 print("Ok")
+                Login.f.setVisible(False)
+                frame.FrameActivity()
 
             else:
                 print("Not Ok")
@@ -53,7 +56,7 @@ class Login:
                                      QMessageBox.StandardButton.Ok)
 
         @staticmethod
-        def cancel(self):
+        def cancel():
             reply = QMessageBox.warning(None, 'Message',
                                         "Do you want to exit?",
                                         QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No)
@@ -63,3 +66,13 @@ class Login:
                 sys.exit(0)
             else:
                 print("Well Done!\nGood Job!")
+
+
+class LoginActivity:
+    f: QWidget
+
+    def __init__(self, fr):
+        LoginActivity.f = fr
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("Welcome"))
+        LoginActivity.f.setLayout(layout)
