@@ -36,15 +36,11 @@ class Frame(QWidget):
 class FrameActivity(QWidget):
     def __init__(self):
         super().__init__()
-        print("FrameActivity")
         self.setWindowTitle("FrameActivity")
-        # QMessageBox.information(None, 'Message', "Hi",
-        #                         QMessageBox.StandardButton.Ok)
+
         with open("./styles/custom.css") as f:
             style = f.read()
             self.setStyleSheet(style)
 
         LoginActivity(self)
         self.show()
-
-        app.exec()
