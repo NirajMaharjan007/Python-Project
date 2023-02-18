@@ -74,5 +74,5 @@ class LoginActivity:
     def __init__(self, fr):
         LoginActivity.f = fr
         layout = QVBoxLayout()
-        layout.addWidget(QLabel("Welcome"))
+
         LoginActivity.f.setLayout(layout)
