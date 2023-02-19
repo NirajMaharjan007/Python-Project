@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
 from data.database import get_login
 import frame
 
@@ -99,8 +100,12 @@ class Menu:
 
     def __init__(self, layout: QBoxLayout):
         self.layout = Menu.layout = layout
+        self.fr = LoginActivity.f
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
 
-        menubar.addMenu('File')
+        file_menu = menubar.addMenu('File')
+        var = QMenu("Varaibles", self.fr)
+
+        file_menu.addMenu(var)
