@@ -74,8 +74,11 @@ class LoginActivity:
 
     def __init__(self, fr):
         LoginActivity.f = fr
+
         vlayout = QVBoxLayout()
         hlayout = QHBoxLayout()
+
+        Menu(vlayout)
 
         header = QLabel('Welcome to Employee Dashboard!')
         header.setObjectName("header")
@@ -89,3 +92,15 @@ class LoginActivity:
 
         LoginActivity.f.setWindowTitle('Dashboard')
         LoginActivity.f.setLayout(vlayout)
+
+
+class Menu:
+    layout: QBoxLayout
+
+    def __init__(self, layout: QBoxLayout):
+        self.layout = Menu.layout = layout
+
+        menubar = QMenuBar()
+        self.layout.setMenuBar(menubar)
+
+        menubar.addMenu('File')
