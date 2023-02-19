@@ -11,6 +11,7 @@ class Login:
 
     def __init__(self, fr):
         Login.f = fr
+        Login.f.setWindowTitle("Login")
 
         hlayout = QHBoxLayout()
         layout = QFormLayout()
@@ -73,6 +74,18 @@ class LoginActivity:
 
     def __init__(self, fr):
         LoginActivity.f = fr
-        layout = QVBoxLayout()
+        vlayout = QVBoxLayout()
+        hlayout = QHBoxLayout()
 
-        LoginActivity.f.setLayout(layout)
+        header = QLabel('Welcome to Employee Dashboard!')
+        header.setObjectName("header")
+
+        vlayout.addWidget(header)
+
+        hlayout.addWidget(QLabel('Employee dat'))
+        hlayout.addWidget(QLabel("Hello world"))
+
+        vlayout.addLayout(hlayout)
+
+        LoginActivity.f.setWindowTitle('Dashboard')
+        LoginActivity.f.setLayout(vlayout)
