@@ -12,8 +12,8 @@ class Login:
     f: QWidget
 
     def __init__(self, fr):
-        Login.f = fr
-        Login.f.setWindowTitle("Login")
+        self.fr = Login.f = fr
+        self.fr.setWindowTitle("Login")
 
         hlayout = QHBoxLayout()
         layout = QFormLayout()
@@ -41,7 +41,7 @@ class Login:
 
         layout.addRow(hlayout)
 
-        Login.f.setLayout(layout)
+        self.fr.setLayout(layout)
 
     class __Function():
 
@@ -75,25 +75,31 @@ class LoginActivity:
     f: QWidget
 
     def __init__(self, fr):
-        LoginActivity.f = fr
+        self.fr = LoginActivity.f = fr
 
         vlayout = QVBoxLayout()
         hlayout = QHBoxLayout()
-
         Menu(vlayout)
+
+        inside_frame = QFrame(self.fr)
+        inside_frame.setFrameShape(QFrame.Shape.Box)
+        inside_frame.setFrameShadow(QFrame.Shadow.Sunken)
+        inside_frame.setLayout(hlayout)
 
         header = QLabel('Welcome to Employee Dashboard!')
         header.setObjectName("header")
+        header.move(0, 0)
 
         vlayout.addWidget(header)
 
         hlayout.addWidget(QLabel('Employee dat'))
         hlayout.addWidget(QLabel("Hello world"))
 
-        vlayout.addLayout(hlayout)
+        vlayout.addWidget(inside_frame)
 
-        LoginActivity.f.setWindowTitle('Dashboard')
-        LoginActivity.f.setLayout(vlayout)
+        self.fr.setWindowTitle('Dashboard')
+
+        self.fr.setLayout(vlayout)
 
 
 class Menu:
@@ -157,7 +163,9 @@ class Menu:
             team.setObjectName("header")
             layout.addWidget(team)
 
-            layout.addWidget(QLabel("Niraj maharjan"))
+            hlayout.addWidget(QLabel("Niraj maharjan"))
             layout.addLayout(hlayout)
 
             self.setLayout(layout)
+            self.setFixedSize(256, 128)
+            self.adjustSize()

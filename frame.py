@@ -36,7 +36,6 @@ class Frame(QWidget):
 class FrameActivity(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FrameActivity")
 
         with open("./styles/custom.css") as f:
             style = f.read()

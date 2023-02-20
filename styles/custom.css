@@ -33,3 +33,8 @@ QAction {
 QDialog {
   padding: 4px 2px;
 }
+
+QPushButton {
+  padding: 4px 8px;
+  width: fit-content;
+}
