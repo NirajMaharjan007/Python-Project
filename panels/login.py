@@ -2,6 +2,7 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from data.database import get_login
+from PyQt6.QtCore import Qt
 import frame
 
 
@@ -102,10 +103,39 @@ class Menu:
         self.layout = Menu.layout = layout
         self.fr = LoginActivity.f
 
+        dialog = self.Dialog()
+
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
 
         file_menu = menubar.addMenu('File')
-        var = QMenu("Varaibles", self.fr)
+        var = QAction("Varaibles", self.fr)
+        var.triggered.connect(lambda: {
+            print("Hello, world!"),
+            print("Please"),
+            dialog.exec()
+        })
 
-        file_menu.addMenu(var)
+        file_menu.addAction(var)
+
+    class Dialog(QDialog):
+        def __init__(self):
+            super().__init__()
+            self.setWindowFlags(self.windowFlags() |
+                                Qt.WindowType.WindowStaysOnTopHint)
+
+            with open("./styles/custom.css") as f:
+                style = f.read()
+                self.setStyleSheet(style)
+
+            label = QLabel('This is a dialog box!', self)
+
+            button = QPushButton('Close', self)
+            button.clicked.connect(self.close)
+
+            layout = QVBoxLayout()
+
+            layout.addWidget(label)
+            layout.addWidget(button)
+
+            self.setLayout(layout)
