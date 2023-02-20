@@ -15,7 +15,7 @@ QWidget {
 QLabel {
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
-  font-size: 0.875em;
+  font-size: 12px;
 }
 
 QPushButton {
@@ -28,6 +28,7 @@ QPushButton {
   background-color: #248544;
   border-color: #28a745;
 }
+
 #login:hover {
   color: #fff;
   background-color: #218838;
@@ -46,6 +47,7 @@ QPushButton {
   background-color: #b90c1d;
   border-color: #dc3545;
 }
+
 #cancel:hover {
   color: #fff;
   background-color: #c82333;
