@@ -104,19 +104,21 @@ class Menu:
         self.fr = LoginActivity.f
 
         dialog = self.Dialog()
+        about_dialog = self.AboutDialog()
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
 
         file_menu = menubar.addMenu('File')
+
+        about_us = QAction("About us", self.fr)
+        about_us.triggered.connect(lambda: about_dialog.exec())
+
         var = QAction("Varaibles", self.fr)
-        var.triggered.connect(lambda: {
-            print("Hello, world!"),
-            print("Please"),
-            dialog.exec()
-        })
+        var.triggered.connect(lambda: dialog.exec())
 
         file_menu.addAction(var)
+        file_menu.addAction(about_us)
 
     class Dialog(QDialog):
         def __init__(self):
@@ -137,5 +139,25 @@ class Menu:
 
             layout.addWidget(label)
             layout.addWidget(button)
+
+            self.setLayout(layout)
+
+    class AboutDialog(QDialog):
+        def __init__(self):
+            super().__init__()
+            self.setWindowFlags(self.windowFlags() |
+                                Qt.WindowType.WindowStaysOnTopHint)
+            with open("./styles/custom.css") as f:
+                style = f.read()
+                self.setStyleSheet(style)
+            layout = QVBoxLayout()
+            hlayout = QHBoxLayout()
+
+            team = QLabel("Teams:")
+            team.setObjectName("header")
+            layout.addWidget(team)
+
+            layout.addWidget(QLabel("Niraj maharjan"))
+            layout.addLayout(hlayout)
 
             self.setLayout(layout)
