@@ -29,3 +29,14 @@ def get_login(username, password):
             return False
     else:
         return False
+
+
+class Employee:
+    def __init__(self):
+        try:
+            if get_connection() is not None:
+                pass
+            else:
+                raise Exception("Can not set to database")
+        except Exception as err:
+            print(err)
