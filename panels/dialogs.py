@@ -1,6 +1,5 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from data.database import get_login, get_adminId
 from PyQt6.QtCore import Qt
 
 

@@ -3,7 +3,7 @@ from sys import exit
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
-from data.database import get_login, get_adminId
+from data.database import get_login, get_adminId, Employee
 from panels.dialogs import *
 
 
@@ -80,21 +80,24 @@ class LoginActivity:
 
         vlayout = QVBoxLayout()
         hlayout = QHBoxLayout()
+        employee = Employee()
+
         Menu(vlayout)
 
         inside_frame = QFrame(self.fr)
-        inside_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        inside_frame.setFrameShape(QFrame.Shape.WinPanel)
         inside_frame.setFrameShadow(QFrame.Shadow.Raised)
         inside_frame.setLayout(hlayout)
 
         header = QLabel('Welcome to Employee Dashboard!')
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
         header.setObjectName("header")
-        header.move(0, 0)
 
         vlayout.addWidget(header)
 
-        hlayout.addWidget(QLabel('Employee dat'))
-        hlayout.addWidget(QLabel("Hello world"))
+        hlayout.addWidget(
+            QLabel("Employees count: " + str(employee.get_count())))
 
         vlayout.addWidget(inside_frame)
 
