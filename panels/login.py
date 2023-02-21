@@ -1,9 +1,10 @@
-import sys
+import frame
+from sys import exit
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from data.database import get_login
 from PyQt6.QtCore import Qt
-import frame
+from data.database import get_login, get_adminId
+from panels.dialogs import *
 
 
 class Login:
@@ -48,7 +49,6 @@ class Login:
         @ staticmethod
         def do():
             if get_login(Login.username.text(), Login.password.text()):
-                print("Ok")
                 Login.f.setVisible(False)
                 frame.FrameActivity()
 
@@ -66,7 +66,7 @@ class Login:
 
             if reply == QMessageBox.StandardButton.Yes:
                 print("OMG! You are exiting")
-                sys.exit(0)
+                exit(0)
             else:
                 print("Well Done!\nGood Job!")
 
@@ -76,14 +76,15 @@ class LoginActivity:
 
     def __init__(self, fr):
         self.fr = LoginActivity.f = fr
+        print("Admin id =>", get_adminId())
 
         vlayout = QVBoxLayout()
         hlayout = QHBoxLayout()
         Menu(vlayout)
 
         inside_frame = QFrame(self.fr)
-        inside_frame.setFrameShape(QFrame.Shape.Box)
-        inside_frame.setFrameShadow(QFrame.Shadow.Sunken)
+        inside_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        inside_frame.setFrameShadow(QFrame.Shadow.Raised)
         inside_frame.setLayout(hlayout)
 
         header = QLabel('Welcome to Employee Dashboard!')
@@ -109,8 +110,8 @@ class Menu:
         self.layout = Menu.layout = layout
         self.fr = LoginActivity.f
 
-        dialog = self.Dialog()
-        about_dialog = self.AboutDialog()
+        dialog = Dialog()
+        about_dialog = AboutDialog()
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
@@ -125,47 +126,3 @@ class Menu:
 
         file_menu.addAction(var)
         file_menu.addAction(about_us)
-
-    class Dialog(QDialog):
-        def __init__(self):
-            super().__init__()
-            self.setWindowFlags(self.windowFlags() |
-                                Qt.WindowType.WindowStaysOnTopHint)
-
-            with open("./styles/custom.css") as f:
-                style = f.read()
-                self.setStyleSheet(style)
-
-            label = QLabel('This is a dialog box!', self)
-
-            button = QPushButton('Close', self)
-            button.clicked.connect(self.close)
-
-            layout = QVBoxLayout()
-
-            layout.addWidget(label)
-            layout.addWidget(button)
-
-            self.setLayout(layout)
-
-    class AboutDialog(QDialog):
-        def __init__(self):
-            super().__init__()
-            self.setWindowFlags(self.windowFlags() |
-                                Qt.WindowType.WindowStaysOnTopHint)
-            with open("./styles/custom.css") as f:
-                style = f.read()
-                self.setStyleSheet(style)
-            layout = QVBoxLayout()
-            hlayout = QHBoxLayout()
-
-            team = QLabel("Teams:")
-            team.setObjectName("header")
-            layout.addWidget(team)
-
-            hlayout.addWidget(QLabel("Niraj maharjan"))
-            layout.addLayout(hlayout)
-
-            self.setLayout(layout)
-            self.setFixedSize(256, 128)
-            self.adjustSize()
