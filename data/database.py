@@ -25,7 +25,7 @@ def get_login(username, password):
     if conn is not None:
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+            "SELECT * FROM admins WHERE name = %s AND password = %s", (username, password))
         result = cursor.fetchone()
         if result is not None:
             return True
@@ -40,7 +40,7 @@ def get_adminId():
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT id FROM users WHERE username = %s AND password = %s", (u, p))
+            "SELECT id FROM admins WHERE name = %s AND password = %s", (u, p))
         result = cursor.fetchone()
 
         if result is not None:
