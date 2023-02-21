@@ -17,7 +17,11 @@ def get_connection():
 
 
 def get_login(username, password):
+    global u, p
+    u = username
+    p = password
     conn = get_connection()
+
     if conn is not None:
         cursor = conn.cursor()
         cursor.execute(
@@ -29,6 +33,21 @@ def get_login(username, password):
             return False
     else:
         return False
+
+
+def get_adminId():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id FROM users WHERE username = %s AND password = %s", (u, p))
+        result = cursor.fetchone()
+
+        if result is not None:
+            return result[0]
+
+    except Exception as err:
+        print(err)
 
 
 class Employee:
