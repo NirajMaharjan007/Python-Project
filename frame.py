@@ -13,6 +13,10 @@ class Frame(QWidget):
 
         super().__init__()
 
+        with open("./styles/styles.css") as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
         if get_connection() is not None:
             Login(self)
 
@@ -24,11 +28,8 @@ class Frame(QWidget):
             if reply == QMessageBox.StandardButton.Ok:
                 sys.exit(0)
 
+        self.move(1024, 512)
         self.show()
-
-        with open("./styles/styles.css") as f:
-            style = f.read()
-            self.setStyleSheet(style)
 
         app.exec()
 
@@ -42,5 +43,6 @@ class FrameActivity(QWidget):
             self.setStyleSheet(style)
 
         LoginActivity(self)
-        self.setGeometry(600, 300, 1024, 512)
+        self.move(1024, 380)
+        self.adjustSize()
         self.show()
