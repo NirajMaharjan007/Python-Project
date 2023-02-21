@@ -112,11 +112,13 @@ class Menu:
 
         dialog = Dialog()
         about_dialog = AboutDialog()
+        admin_dialog = AdminDialog()
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
 
         file_menu = menubar.addMenu('File')
+        admin_bar = menubar.addMenu('Admin')
 
         about_us = QAction("About us", self.fr)
         about_us.triggered.connect(lambda: about_dialog.exec())
@@ -124,5 +126,10 @@ class Menu:
         var = QAction("Varaibles", self.fr)
         var.triggered.connect(lambda: dialog.exec())
 
+        admin_info = QAction("Admin info", self.fr)
+        admin_info.triggered.connect(lambda: admin_dialog.exec())
+
         file_menu.addAction(var)
         file_menu.addAction(about_us)
+
+        admin_bar.addAction(admin_info)

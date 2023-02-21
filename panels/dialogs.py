@@ -48,3 +48,29 @@ class AboutDialog(QDialog):
         self.setLayout(layout)
         self.setFixedSize(256, 128)
         self.adjustSize()
+
+
+class AdminDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(self.windowFlags() |
+                            Qt.WindowType.WindowStaysOnTopHint)
+
+        with open("./styles/custom.css") as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
+        self.setWindowTitle("Admin's Information")
+
+        layout = QVBoxLayout()
+
+        label = QLabel('Admin\'s details', self)
+        label.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                           Qt.AlignmentFlag.AlignTop)
+        label.setObjectName("header")
+
+        layout.addWidget(label)
+
+        self.setLayout(layout)
+        self.setFixedSize(256, 128)
+        self.adjustSize()
