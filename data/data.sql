@@ -1,4 +1,4 @@
--- Active: 1657020369972@@127.0.0.1@3306
+-- Active: 1676751287727@@127.0.0.1@3306@my_database
 
 CREATE DATABASE IF NOT EXISTS my_database;
 
@@ -23,3 +23,5 @@ create table
         admin_id int(11) NOT NULL,
         Foreign Key (admin_id) REFERENCES admins(id)
     );
+
+SELECT COUNT(emp_id) FROM employees ;

@@ -53,9 +53,25 @@ def get_adminId():
 class Employee:
     def __init__(self):
         try:
-            if get_connection() is not None:
-                pass
+            self.conn = get_connection()
+            if self.conn is not None:
+                self.cur = self.conn.cursor()
             else:
                 raise Exception("Can not set to database")
         except Exception as err:
             print(err)
+
+    def get_count(self):
+        try:
+            self.cur.execute("SELECT COUNT(*) FROM employees")
+            result = self.cur.fetchone()[0]
+            if result is not None:
+                return result
+            elif result is None:
+                return 0
+            else:
+                raise ("Did not find employee; Error")
+
+        except Exception as err:
+            print(err)
+            return -1
