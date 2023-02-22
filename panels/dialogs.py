@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
+from data.database import Employee
 
 
 class Dialog(QDialog):
@@ -73,3 +74,95 @@ class AdminDialog(QDialog):
         self.setLayout(layout)
         self.setFixedSize(256, 128)
         self.adjustSize()
+
+
+class EmployeeDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.emp = Employee()
+
+        self.setFixedSize(512, 236)
+
+        self.setWindowFlags(self.windowFlags() |
+                            Qt.WindowType.WindowStaysOnTopHint)
+
+        with open("./styles/styles.css") as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
+        self.setWindowTitle("Add Employees")
+
+        form = QFormLayout()
+        hlayout = QHBoxLayout()
+        radio_layout = QHBoxLayout()
+
+        male_radio = QRadioButton("Male")
+        female_radio = QRadioButton("Female")
+        male_radio.toggled.connect(self.__set_gender)
+        female_radio.toggled.connect(self.__set_gender)
+
+        radio_layout.addWidget(QLabel("Select Gender:"))
+        radio_layout.addWidget(male_radio)
+        radio_layout.addWidget(female_radio)
+
+        self.name = QLineEdit()
+        self.name.setObjectName("form-control")
+
+        self.address = QLineEdit()
+        self.address.setObjectName("form-control")
+
+        self.email = QLineEdit()
+        self.email.setObjectName("form-control")
+
+        self.dob = QLineEdit()
+        self.dob.setObjectName("form-control")
+
+        self.phone = QLineEdit()
+        self.phone.setObjectName("form-control")
+
+        save = QPushButton("Save")
+        save.setObjectName("login")
+        save.clicked.connect(self.__save)
+
+        cancel = QPushButton("Cancel")
+        cancel.setObjectName("cancel")
+        cancel.clicked.connect(lambda: self.close())
+
+        hlayout.addWidget(save)
+        hlayout.addWidget(cancel)
+
+        form.addRow("Employee's name", self.name)
+        form.addRow("Employee's email", self.email)
+        form.addRow("Employee's address", self.address)
+        form.addRow("Employee's date of birth", self.dob)
+        form.addRow("Employee's phone number", self.phone)
+        form.addRow(radio_layout)
+        form.addRow(hlayout)
+
+        self.setLayout(form)
+        self.adjustSize()
+
+    def __set_gender(self):
+        sender = self.sender()
+        if sender.isChecked():
+            self.gender = sender.text()
+
+    def __save(self):
+        name = self.name.text()
+        address = self.address.text()
+        email = self.email.text()
+        dob = self.dob.text()
+        gender = self.gender
+        phone = self.phone.text()
+
+        print(name, address, email, dob, gender, phone)
+
+        print("save")
+
+        if self.emp.set_employee(name, address, email, dob, gender, phone):
+            QMessageBox.information(None, 'Success', "Successfully added employee details",
+                                    QMessageBox.StandardButton.Close)
+        else:
+            QMessageBox.critical(None, 'Error', "Failed to add employee details",
+                                 QMessageBox.StandardButton.Close)

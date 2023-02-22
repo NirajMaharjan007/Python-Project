@@ -97,6 +97,7 @@ class Menu:
         dialog = Dialog()
         about_dialog = AboutDialog()
         admin_dialog = AdminDialog()
+        emp_dialog = EmployeeDialog()
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
@@ -113,7 +114,11 @@ class Menu:
         admin_info = QAction("Admin info", self.fr)
         admin_info.triggered.connect(lambda: admin_dialog.exec())
 
+        emp_set = QAction("Add Employees", self.fr)
+        emp_set.triggered.connect(lambda: emp_dialog.exec())
+
         file_menu.addAction(var)
         file_menu.addAction(about_us)
 
+        admin_bar.addAction(emp_set)
         admin_bar.addAction(admin_info)
