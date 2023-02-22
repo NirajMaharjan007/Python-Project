@@ -1,5 +1,3 @@
--- Active: 1676751287727@@127.0.0.1@3306@my_database
-
 CREATE DATABASE IF NOT EXISTS my_database;
 
 create table

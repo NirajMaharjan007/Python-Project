@@ -67,8 +67,6 @@ class Employee:
             result = self.cur.fetchone()[0]
             if result is not None:
                 return result
-            elif result is None:
-                return 0
             else:
                 raise ("Did not find employee; Error")
 
