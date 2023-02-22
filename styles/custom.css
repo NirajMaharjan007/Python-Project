@@ -2,16 +2,29 @@ QWidget,
 QDialog {
   background-color: rgb(230, 230, 230);
   color: #212529;
+  font-size: 14px;
   line-height: 1.5;
   margin: 0;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+#header2,
+#header2_underline {
   font-size: 18px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+
+#header2_underline {
+  text-decoration: underline;
 }
 
 QLabel {

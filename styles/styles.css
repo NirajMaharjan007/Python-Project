@@ -1,12 +1,12 @@
 QWidget {
-  background-color: rgb(190, 190, 190);
+  background-color: rgb(225, 225, 225);
   color: #282828;
+  font-size: 14px;
 }
 
 #form-control {
-  width: 100%;
+  width: fit-content;
   padding: 2px 4px;
-  font-size: 14px;
   line-height: 1.5;
   border: 1px solid #282828;
   border-radius: 2px;
@@ -15,7 +15,6 @@ QWidget {
 QLabel {
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
-  font-size: 12px;
 }
 
 QPushButton {
