@@ -1,4 +1,5 @@
 from mysql.connector import connect
+from random import randint
 
 
 def get_connection():
@@ -73,3 +74,16 @@ class Employee:
         except Exception as err:
             print(err)
             return -1
+
+    def set_employee(self, name, address, email, dob, gender, phone):
+        try:
+            emp_id = randint(0, 3000)
+            admin_id = get_adminId()
+            sql = f"INSERT INTO employees VALUES ('{emp_id}', '{name}', '{address}', '{email}', '{dob}', '{gender}', '{phone}', '{admin_id}')"
+            print(sql)
+            self.cur.execute(sql)
+            self.conn.commit()
+            return True
+        except Exception as err:
+            print(err)
+            return False

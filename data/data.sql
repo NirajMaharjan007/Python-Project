@@ -15,9 +15,9 @@ create table
         emp_name varchar(255),
         address varchar(255),
         email varchar(255),
-        dob VARCHAR(255),
+        dob DATE,
         gender varchar(255),
-        phone_no int(11),
+        phone_no int(20),
         admin_id int(11) NOT NULL,
         Foreign Key (admin_id) REFERENCES admins(id)
     );
