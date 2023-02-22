@@ -13,7 +13,10 @@ class Container(QVBoxLayout):
         self.frame = Container.frame = frame
 
         hlayout = QHBoxLayout()
+        vlayout = QVBoxLayout()
         employee = Employee()
+
+        hlayout.addLayout(vlayout)
 
         inside_frame = QFrame(self.frame)
         inside_frame.setFrameShape(QFrame.Shape.WinPanel)
@@ -27,7 +30,12 @@ class Container(QVBoxLayout):
 
         self.addWidget(header)
 
-        hlayout.addWidget(
+        label = QLabel("Employee Summary")
+        label.setObjectName("header2_underline")
+        label.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                           Qt.AlignmentFlag.AlignTop)
+        vlayout.addWidget(label)
+        vlayout.addWidget(
             QLabel("Employees count: " + str(employee.get_count())))
 
         self.addWidget(inside_frame)
