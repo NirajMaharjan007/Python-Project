@@ -39,8 +39,7 @@ QMenuBar,
 QMenu,
 QAction {
   border: 1px solid #212529;
-  padding: 0.8rem 0.5rem;
-  margin: 0;
+  padding: 2.6px 2px;
 }
 
 QDialog {
@@ -50,4 +49,17 @@ QDialog {
 QPushButton {
   padding: 4px 8px;
   width: fit-content;
+}
+
+QMenu::item:selected,
+QMenuBar::item:selected {
+  color: #212529;
+  background-color: #B9F3FC;
+  border-color: #B4E4FF;
+}
+
+#logout>QAction::item:selected {
+  color: #212529;
+  background-color: #ff2800;
+  border-color: #de2d0e;
 }
