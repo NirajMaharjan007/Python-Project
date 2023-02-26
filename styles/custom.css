@@ -12,7 +12,7 @@ QDialog {
   font-size: 20px;
   font-weight: bold;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 #header2,
@@ -20,7 +20,7 @@ QDialog {
   font-size: 18px;
   font-weight: bold;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 #header2_underline {
@@ -39,7 +39,7 @@ QMenuBar,
 QMenu,
 QAction {
   border: 1px solid #212529;
-  padding: 0.8rem 0.5rem;
+  padding: 1px 2px;
   margin: 0;
 }
 
@@ -50,4 +50,13 @@ QDialog {
 QPushButton {
   padding: 4px 8px;
   width: fit-content;
+}
+
+QMenuBar::item:selected,
+QMenu::item:selected,
+QAction::item:selected {
+  border: 1px solid #b4e4ff;
+  background-color: #95bdff;
+  padding: 1.26px 1.2px;
+  margin: 0;
 }
