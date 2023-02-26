@@ -50,6 +50,8 @@ class Login:
         @ staticmethod
         def do():
             if get_login(Login.username.text(), Login.password.text()):
+                Login.username.setText("")
+                Login.password.setText("")
                 Login.f.setVisible(False)
                 frame.FrameActivity()
 
@@ -93,6 +95,7 @@ class Menu:
     def __init__(self, layout: QBoxLayout):
         self.layout = Menu.layout = layout
         self.fr = LoginActivity.f
+        self.login_frame = Login.f
 
         dialog = Dialog()
         about_dialog = AboutDialog()
@@ -101,6 +104,12 @@ class Menu:
 
         menubar = QMenuBar()
         self.layout.setMenuBar(menubar)
+
+        logout = QMenu('Logout', self.fr)
+        logout.aboutToShow.connect(lambda: {print("Logged out"),
+                                            self.login_frame.setVisible(True),
+                                            self.fr.setVisible(False)
+                                            })
 
         file_menu = menubar.addMenu('File')
         admin_bar = menubar.addMenu('Admin')
@@ -122,3 +131,5 @@ class Menu:
 
         admin_bar.addAction(emp_set)
         admin_bar.addAction(admin_info)
+
+        menubar.addMenu(logout)

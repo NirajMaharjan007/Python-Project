@@ -154,7 +154,7 @@ class EmployeeDialog(QDialog):
         email = self.email.text()
         dob = self.dob.text()
         gender = self.gender
-        phone = self.phone.text()
+        phone = int(self.phone.text())
 
         print(name, address, email, dob, gender, phone)
 
