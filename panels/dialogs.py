@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from data.database import Employee
+from datetime import datetime
 
 
 class Dialog(QDialog):
@@ -149,20 +150,29 @@ class EmployeeDialog(QDialog):
             self.gender = sender.text()
 
     def __save(self):
-        name = self.name.text()
-        address = self.address.text()
-        email = self.email.text()
-        dob = self.dob.text()
-        gender = self.gender
-        phone = int(self.phone.text())
+        try:
+            message_box = QMessageBox()
+            message_box.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
 
-        print(name, address, email, dob, gender, phone)
+            name = self.name.text()
+            address = self.address.text()
+            email = self.email.text()
+            dob = datetime.strptime(self.dob.text(), '%Y-%m-%d').date()
+            gender = self.gender
+            phone = int(self.phone.text())
 
-        print("save")
+            print(name, address, email, dob, gender, phone)
 
-        if self.emp.set_employee(name, address, email, dob, gender, phone):
-            QMessageBox.information(None, 'Success', "Successfully added employee details",
-                                    QMessageBox.StandardButton.Close)
-        else:
-            QMessageBox.critical(None, 'Error', "Failed to add employee details",
-                                 QMessageBox.StandardButton.Close)
+            if name == '' or address == '' or email == '':
+                raise Exception("The Text field should not be blank")
+
+            elif self.emp.set_employee(name, address, email, dob, gender, phone):
+                message_box.information(message_box, 'Success', "Successfully added employee details",
+                                        QMessageBox.StandardButton.Close)
+            else:
+                raise Exception("Failed to add employee details")
+
+        except Exception as err:
+            print(err)
+            message_box.critical(message_box, 'Error',
+                                 str(err), QMessageBox.StandardButton.Close)
