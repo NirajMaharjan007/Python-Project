@@ -8,6 +8,8 @@ from panels.layouts import *
 
 class Login:
     f: QWidget
+    username: QLineEdit
+    password: QLineEdit
 
     def __init__(self, fr):
         self.fr = Login.f = fr
@@ -17,12 +19,12 @@ class Login:
         layout = QFormLayout()
 
         Login.username = QLineEdit()
-
         Login.password = QLineEdit()
-        Login.password.setEchoMode(QLineEdit.EchoMode.Password)
 
-        Login.username.setObjectName("form-control")
-        Login.password.setObjectName("form-control")
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
+
+        self.username.setObjectName("form-control")
+        self.password.setObjectName("form-control")
 
         self.ok = QPushButton("Login")
         self.ok.setObjectName("login")
@@ -36,6 +38,9 @@ class Login:
 
         layout.addRow("username:", self.username)
         layout.addRow("password:", self.password)
+
+        self.username.returnPressed.connect(self.ok.click)
+        self.password.returnPressed.connect(self.ok.click)
 
         layout.addRow(hlayout)
 
