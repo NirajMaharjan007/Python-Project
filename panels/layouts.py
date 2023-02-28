@@ -44,7 +44,7 @@ class Container(QVBoxLayout):
 
 
 class LoginFormLayout(QFormLayout):
-    username: QLineEdit
+    admin: QLineEdit
     password: QLineEdit
     f: QWidget
 
@@ -53,12 +53,12 @@ class LoginFormLayout(QFormLayout):
         LoginFormLayout.f = frame
         hlayout = QHBoxLayout()
 
-        LoginFormLayout.username = QLineEdit()
+        LoginFormLayout.admin = QLineEdit()
 
         LoginFormLayout.password = QLineEdit()
         LoginFormLayout.password.setEchoMode(QLineEdit.EchoMode.Password)
 
-        LoginFormLayout.username.setObjectName("form-control")
+        LoginFormLayout.admin.setObjectName("form-control")
         LoginFormLayout.password.setObjectName("form-control")
 
         self.ok = QPushButton("Login")
@@ -71,16 +71,22 @@ class LoginFormLayout(QFormLayout):
         self.cancel.clicked.connect(self.__Function.cancel)
         hlayout.addWidget(self.cancel)
 
-        self.addRow("Admin name:", self.username)
-        self.addRow("Password:", self.password)
+        self.addRow("Enter Admin's name:", self.admin)
+        self.addRow("Enter Admin's password:", self.password)
 
         self.addRow(hlayout)
+
+        self.f.adjustSize()
+        self.f.setFixedSize(300, 120)
+        self.f.setLayout(self)
 
     class __Function():
 
         @ staticmethod
         def do():
-            if get_login(LoginFormLayout.username.text(), LoginFormLayout.password.text()):
+            if get_login(LoginFormLayout.admin.text(), LoginFormLayout.password.text()):
+                LoginFormLayout.admin.setText("")
+                LoginFormLayout.password.setText("")
                 LoginFormLayout.f.setVisible(False)
                 frame.FrameActivity()
 

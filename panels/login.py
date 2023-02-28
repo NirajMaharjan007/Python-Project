@@ -8,71 +8,12 @@ from panels.layouts import *
 
 class Login:
     f: QWidget
-    username: QLineEdit
-    password: QLineEdit
 
     def __init__(self, fr):
-        self.fr = Login.f = fr
-        self.fr.setWindowTitle("Login")
+        Login.f = fr
 
-        hlayout = QHBoxLayout()
-        layout = QFormLayout()
-
-        Login.username = QLineEdit()
-        Login.password = QLineEdit()
-
-        self.password.setEchoMode(QLineEdit.EchoMode.Password)
-
-        self.username.setObjectName("form-control")
-        self.password.setObjectName("form-control")
-
-        self.ok = QPushButton("Login")
-        self.ok.setObjectName("login")
-        self.ok.clicked.connect(self.__Function.do)
-        hlayout.addWidget(self.ok)
-
-        self.cancel = QPushButton("Cancel")
-        self.cancel.setObjectName("cancel")
-        self.cancel.clicked.connect(self.__Function.cancel)
-        hlayout.addWidget(self.cancel)
-
-        layout.addRow("username:", self.username)
-        layout.addRow("password:", self.password)
-
-        self.username.returnPressed.connect(self.ok.click)
-        self.password.returnPressed.connect(self.ok.click)
-
-        layout.addRow(hlayout)
-
-        self.fr.setLayout(layout)
-
-    class __Function():
-
-        @ staticmethod
-        def do():
-            if get_login(Login.username.text(), Login.password.text()):
-                Login.username.setText("")
-                Login.password.setText("")
-                Login.f.setVisible(False)
-                frame.FrameActivity()
-
-            else:
-                print("Not Ok")
-                QMessageBox.question(None, 'Error',
-                                     "Username or Password is incorrect",
-                                     QMessageBox.StandardButton.Ok)
-
-        @staticmethod
-        def cancel():
-            reply = QMessageBox.warning(None, 'Message',
-                                        "Do you want to exit?",
-                                        QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No)
-
-            if reply == QMessageBox.StandardButton.Yes:
-                print("OMG! You are exiting")
-                exit(0)
-            else:
-                print("Well Done!\nGood Job!")
+        self.f.setWindowTitle("Login")
+        LoginFormLayout(self.f)
 
 
 class LoginActivity:
@@ -107,10 +48,8 @@ class Menu:
         self.layout.setMenuBar(menubar)
 
         logout = QMenu('Logout', self.fr)
-        logout.aboutToShow.connect(lambda: {print("Logged out"),
-                                            self.login_frame.setVisible(True),
-                                            self.fr.setVisible(False)
-                                            })
+        logout.aboutToShow.connect(lambda: {self.fr.setVisible(False),
+                                            self.login_frame.setVisible(True)})
 
         file_menu = menubar.addMenu('File')
         admin_bar = menubar.addMenu('Admin')
