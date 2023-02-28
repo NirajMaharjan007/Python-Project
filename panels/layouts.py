@@ -77,7 +77,7 @@ class LoginFormLayout(QFormLayout):
         self.addRow(hlayout)
 
         self.f.adjustSize()
-        self.f.setFixedSize(300, 120)
+        self.f.setFixedSize(300, 112)
         self.f.setLayout(self)
 
     class __Function():
