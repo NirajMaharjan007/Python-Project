@@ -87,3 +87,11 @@ class Employee:
         except Exception as err:
             print(err)
             return False
+
+    def get_employeeID(self):
+        try:
+            sql = ""
+
+        except Exception as err:
+            print(err)
+            return -1
