@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QAbstractTableModel
 from data.database import Employee, get_login
 from sys import exit
 import frame
@@ -69,7 +69,9 @@ class LoginFormLayout(QFormLayout):
     def __init__(self, frame=QWidget):
         super().__init__()
         LoginFormLayout.f = frame
+
         hlayout = QHBoxLayout()
+        hlayout.setContentsMargins(0, 8, 0, 0)
 
         LoginFormLayout.admin = QLineEdit()
         LoginFormLayout.password = QLineEdit()
@@ -131,9 +133,16 @@ class LoginFormLayout(QFormLayout):
                 print("Well Done!\nGood Job!")
 
 
-class TabLayout(QTabWidget):
+class TableDisplay(QAbstractTableModel):
     frame: QFrame
 
     def __init__(self, frame=QFrame):
-        self.frame = frame
+        TableDisplay.frame = frame
         super().__init__()
+
+    def data(self, index, role):
+        if role == Qt.ItemDataRole.DisplayRole:
+            # See below for the nested-list data structure.
+            # .row() indexes into the outer list,
+            # .column() indexes into the sub-list
+            return self._data[index.row()][index.column()]

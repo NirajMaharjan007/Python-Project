@@ -83,8 +83,6 @@ class EmployeeDialog(QDialog):
 
         self.emp = Employee()
 
-        self.setFixedSize(512, 236)
-
         self.setWindowFlags(self.windowFlags() |
                             Qt.WindowType.WindowStaysOnTopHint)
 
@@ -142,6 +140,7 @@ class EmployeeDialog(QDialog):
         form.addRow(hlayout)
 
         self.setLayout(form)
+        self.setFixedSize(410, 235)
         self.adjustSize()
 
     def __set_gender(self):

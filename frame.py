@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QApplication, QMessageBox, QMainWindow
 from data.database import get_connection
-from panels.login import Login, LoginActivity
+from panels.activities import Login, LoginActivity
 
 import sys
 

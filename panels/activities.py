@@ -24,6 +24,7 @@ class LoginActivity:
         print("Admin id =>", get_adminId())
 
         container = Container(self.f)
+
         Menu(container)
 
         self.f.setWindowTitle('Dashboard')
