@@ -52,6 +52,8 @@ def get_adminId():
 
 
 class Employee:
+    count: int
+
     def __init__(self):
         try:
             self.conn = get_connection()
@@ -61,6 +63,8 @@ class Employee:
                 raise Exception("Can not set to database")
         except Exception as err:
             print(err)
+
+        self.count = self.get_count()
 
     def get_count(self):
         try:
