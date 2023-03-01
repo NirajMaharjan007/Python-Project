@@ -50,14 +50,22 @@ class EmployeeFrame(QFrame):
     def __init__(self, f=QWidget):
         EmployeeFrame.f = f
         super().__init__()
+
         vlay = QVBoxLayout()
         hlay = QHBoxLayout()
+
+        table = TableDisplay()
+
         header = QLabel("Employees Details",  self.f)
         header.setObjectName("header2_underline")
         vlay.addWidget(header)
-        vlay.addLayout(hlay)
+
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
+
+        vlay.addWidget(table)
+        vlay.addLayout(hlay)
+
         self.setLayout(vlay)
 
 
@@ -103,7 +111,6 @@ class LoginFormLayout(QFormLayout):
         self.f.setLayout(self)
 
     class __Function():
-
         @ staticmethod
         def do():
             admin = LoginFormLayout.admin
@@ -133,16 +140,23 @@ class LoginFormLayout(QFormLayout):
                 print("Well Done!\nGood Job!")
 
 
-class TableDisplay(QAbstractTableModel):
-    frame: QFrame
+class TableDisplay(QTableWidget):
+    # frame: QWidget
 
-    def __init__(self, frame=QFrame):
-        TableDisplay.frame = frame
+    def __init__(self):
         super().__init__()
 
-    def data(self, index, role):
-        if role == Qt.ItemDataRole.DisplayRole:
-            # See below for the nested-list data structure.
-            # .row() indexes into the outer list,
-            # .column() indexes into the sub-list
-            return self._data[index.row()][index.column()]
+        employee = Employee()
+        self.setRowCount(employee.count)
+        self.setColumnCount(9)
+
+        for i in range(employee.count):
+            for j in range(8):
+                self.setItem(i, j, QTableWidgetItem("Item"))
+
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch)
+
+    class Button(QWidget):
+        def __init__(self):
+            pass

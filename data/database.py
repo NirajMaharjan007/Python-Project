@@ -92,6 +92,9 @@ class Employee:
             print(err)
             return False
 
+    def get_employee_detail(self):
+        pass
+
     def get_employeeID(self):
         try:
             sql = ""
