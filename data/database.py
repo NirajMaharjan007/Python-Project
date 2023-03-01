@@ -87,3 +87,16 @@ class Employee:
         except Exception as err:
             print(err)
             return False
+
+    def get_employeeId(self, name):
+        try:
+            self.cur.execute("SELECT id FROM employees")
+            result = self.cur.fetchone()
+            if result is not None:
+                return result[0]
+            else:
+                raise ("Did not find employee id; Error")
+
+        except Exception as err:
+            print(err)
+            return -1
