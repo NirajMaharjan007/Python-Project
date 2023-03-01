@@ -37,10 +37,28 @@ class Container(QVBoxLayout):
         label = QLabel("Employee Summary")
         label.setObjectName("header2_underline")
         vlayout.addWidget(label)
-        vlayout.addWidget(
-            QLabel("Employees count: " + str(employee.get_count())))
+        vlayout.addWidget(QLabel("Employees count: "
+                                 + str(employee.count)))
 
         self.addWidget(inside_frame)
+        self.addWidget(EmployeeFrame(self.frame))
+
+
+class EmployeeFrame(QFrame):
+    f: QWidget
+
+    def __init__(self, f=QWidget):
+        EmployeeFrame.f = f
+        super().__init__()
+        vlay = QVBoxLayout()
+        hlay = QHBoxLayout()
+        header = QLabel("Employees Details",  self.f)
+        header.setObjectName("header2_underline")
+        vlay.addWidget(header)
+        vlay.addLayout(hlay)
+        self.setFrameShape(QFrame.Shape.WinPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
+        self.setLayout(vlay)
 
 
 class LoginFormLayout(QFormLayout):
@@ -54,16 +72,18 @@ class LoginFormLayout(QFormLayout):
         hlayout = QHBoxLayout()
 
         LoginFormLayout.admin = QLineEdit()
-
         LoginFormLayout.password = QLineEdit()
-        LoginFormLayout.password.setEchoMode(QLineEdit.EchoMode.Password)
 
-        LoginFormLayout.admin.setObjectName("form-control")
-        LoginFormLayout.password.setObjectName("form-control")
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
+
+        self.admin.setObjectName("form-control")
+        self.password.setObjectName("form-control")
 
         self.ok = QPushButton("Login")
         self.ok.setObjectName("login")
         self.ok.clicked.connect(self.__Function.do)
+        self.admin.returnPressed.connect(self.ok.click)
+        self.password.returnPressed.connect(self.ok.click)
         hlayout.addWidget(self.ok)
 
         self.cancel = QPushButton("Cancel")
@@ -77,16 +97,20 @@ class LoginFormLayout(QFormLayout):
         self.addRow(hlayout)
 
         self.f.adjustSize()
-        self.f.setFixedSize(300, 112)
+        self.f.setFixedSize(300, 120)
         self.f.setLayout(self)
 
     class __Function():
 
         @ staticmethod
         def do():
-            if get_login(LoginFormLayout.admin.text(), LoginFormLayout.password.text()):
-                LoginFormLayout.admin.setText("")
-                LoginFormLayout.password.setText("")
+            admin = LoginFormLayout.admin
+            password = LoginFormLayout.password
+
+            if get_login(admin.text(), password.text()):
+                admin.setText("")
+                password.setText("")
+
                 LoginFormLayout.f.setVisible(False)
                 frame.FrameActivity()
 
@@ -105,3 +129,11 @@ class LoginFormLayout(QFormLayout):
                 exit(0)
             else:
                 print("Well Done!\nGood Job!")
+
+
+class TabLayout(QTabWidget):
+    frame: QFrame
+
+    def __init__(self, frame=QFrame):
+        self.frame = frame
+        super().__init__()

@@ -20,15 +20,14 @@ class LoginActivity:
     f: QWidget
 
     def __init__(self, fr):
-        self.fr = LoginActivity.f = fr
+        LoginActivity.f = fr
         print("Admin id =>", get_adminId())
 
-        container = Container(self.fr)
+        container = Container(self.f)
         Menu(container)
 
-        self.fr.setWindowTitle('Dashboard')
-
-        self.fr.setLayout(container)
+        self.f.setWindowTitle('Dashboard')
+        self.f.setLayout(container)
 
 
 class Menu:
