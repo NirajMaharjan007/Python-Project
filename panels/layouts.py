@@ -37,10 +37,28 @@ class Container(QVBoxLayout):
         label = QLabel("Employee Summary")
         label.setObjectName("header2_underline")
         vlayout.addWidget(label)
-        vlayout.addWidget(
-            QLabel("Employees count: " + str(employee.get_count())))
+        vlayout.addWidget(QLabel("Employees count: "
+                                 + str(employee.count)))
 
         self.addWidget(inside_frame)
+        self.addWidget(EmployeeFrame(self.frame))
+
+
+class EmployeeFrame(QFrame):
+    f: QWidget
+
+    def __init__(self, f=QWidget):
+        EmployeeFrame.f = f
+        super().__init__()
+        vlay = QVBoxLayout()
+        hlay = QHBoxLayout()
+        header = QLabel("Employees Details",  self.f)
+        header.setObjectName("header2_underline")
+        vlay.addWidget(header)
+        vlay.addLayout(hlay)
+        self.setFrameShape(QFrame.Shape.WinPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
+        self.setLayout(vlay)
 
 
 class LoginFormLayout(QFormLayout):
@@ -111,3 +129,11 @@ class LoginFormLayout(QFormLayout):
                 exit(0)
             else:
                 print("Well Done!\nGood Job!")
+
+
+class TabLayout(QTabWidget):
+    frame: QFrame
+
+    def __init__(self, frame=QFrame):
+        self.frame = frame
+        super().__init__()
