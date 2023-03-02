@@ -147,12 +147,28 @@ class TableDisplay(QTableWidget):
         super().__init__()
 
         employee = Employee()
-        self.setRowCount(employee.count)
-        self.setColumnCount(9)
 
-        for i in range(employee.count):
-            for j in range(8):
-                self.setItem(i, j, QTableWidgetItem("Item"))
+        header_labels = ["emp_id", "Emp_name", "address", "email",
+                         "dob", "gender", "phone_no"]
+
+        self.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows)
+        self.setSizePolicy(QSizePolicy.Policy.Preferred,
+                           QSizePolicy.Policy.Preferred)
+
+        self.setRowCount(employee.count)
+        self.setColumnCount(8)
+        self.setHorizontalHeaderLabels(header_labels)
+        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+
+        data = employee.get_employee_detail()
+
+        if data is not None:
+            for row_index, row_data in enumerate(data):
+                # self.insertRow(row_index)
+                for column_index, column_data in enumerate(row_data):
+                    item = QTableWidgetItem(str(column_data))
+                    self.setItem(row_index, column_index, item)
 
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)

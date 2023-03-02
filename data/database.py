@@ -93,7 +93,15 @@ class Employee:
             return False
 
     def get_employee_detail(self):
-        pass
+        try:
+            admin_id = get_adminId()
+            query = f"SELECT emp_id,emp_name,address,email,dob,gender,phone_no FROM employees where admin_id = {admin_id}"
+            self.cur.execute(query)
+            return self.cur
+
+        except Exception as err:
+            print("Error =>", err)
+            return None
 
     def get_employeeID(self):
         try:
