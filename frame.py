@@ -28,7 +28,8 @@ class Frame(QWidget):
             if reply == QMessageBox.StandardButton.Ok:
                 sys.exit(0)
 
-        self.move(1024, 512)
+        self.move(500, 300)
+        self.adjustSize()
         self.show()
 
         app.exec()
@@ -43,6 +44,7 @@ class FrameActivity(QWidget):
             self.setStyleSheet(style)
 
         LoginActivity(self)
-        self.setGeometry(500, 300, 512, 300)
+        self.setGeometry(300, 250, 512, 300)
         self.adjustSize()
+        self.update()
         self.show()
