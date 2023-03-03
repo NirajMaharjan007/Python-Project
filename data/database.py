@@ -103,6 +103,13 @@ class Employee:
             print("Error =>", err)
             return None
 
+    def edit(self, emp_id=int, name=None, address=None, email=None, dob=None, gender=None, phone=None):
+        try:
+            sql = ""
+        except Exception as err:
+            print("Error =>", err)
+            return False
+
     def delete(self, emp_id=int):
         try:
             query = f"DELETE FROM employees WHERE emp_id='{emp_id}'"
