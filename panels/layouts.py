@@ -170,6 +170,7 @@ class TableDisplay(QTableWidget):
                 for column_index, column_data in enumerate(row_data):
                     if column_index == 0:
                         cell_widget = self.__CellWidget(self, column_data)
+                        cell_widget.delete.setProperty("row", column_index)
                         self.setCellWidget(row_index, 7, cell_widget)
 
                     item = QTableWidgetItem(str(column_data))
@@ -183,6 +184,8 @@ class TableDisplay(QTableWidget):
 
     class __CellWidget(QWidget):
         emp_id: int
+        update: QPushButton
+        delete: QPushButton
 
         def __init__(self, table=QTableWidget, emp_id=int):
             self.employee = Employee()
@@ -191,16 +194,16 @@ class TableDisplay(QTableWidget):
 
             self.emp_id = emp_id
             cell_layout = QHBoxLayout()
-            update = QPushButton("Edit")
-            update.setObjectName("update")
-            update.clicked.connect(lambda: print(self.emp_id))
+            self.update = QPushButton("Edit")
+            self.update.setObjectName("update")
+            self.update.clicked.connect(lambda: print(self.emp_id))
 
-            delete = QPushButton("Delete")
-            delete.setObjectName("delete")
-            delete.clicked.connect(self.__delete)
+            self.delete = QPushButton("Delete")
+            self.delete.setObjectName("delete")
+            self.delete.clicked.connect(self.__delete)
 
-            cell_layout.addWidget(update)
-            cell_layout.addWidget(delete)
+            cell_layout.addWidget(self.update)
+            cell_layout.addWidget(self.delete)
             cell_layout.setContentsMargins(2, 4, 2, 4)
 
             self.setLayout(cell_layout)
@@ -209,11 +212,21 @@ class TableDisplay(QTableWidget):
             msg = QMessageBox()
 
             if self.employee.delete(self.emp_id):
+                # Get the row index of the button that was clicked
+                button = self.sender()
+                row = button.property("row")
+
+                # Remove the row from the table
+                self.table.removeRow(row)
                 msg.information(
-                    msg, "Delete", "Requried to logout", msg.StandardButton.Close)
+                    msg, "Delete", "data deleted", msg.StandardButton.Close)
                 self.table.update()
                 print("Deleted")
             else:
                 msg.critical(
                     msg, "Delete", "Already deleted", msg.StandardButton.Close)
                 print("not Deleted")
+
+        def __edit(self):
+            msg = QMessageBox()
+            pass

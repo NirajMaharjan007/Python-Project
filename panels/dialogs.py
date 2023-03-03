@@ -166,7 +166,8 @@ class EmployeeDialog(QDialog):
                 raise Exception("The Text field should not be blank")
 
             elif self.emp.set_employee(name, address, email, dob, gender, phone):
-                message_box.information(message_box, 'Success', "Successfully added employee details",
+                status = "Successfully added employee details\nRequried to re-login"
+                message_box.information(message_box, 'Success', status,
                                         QMessageBox.StandardButton.Close)
             else:
                 raise Exception("Failed to add employee details")
