@@ -81,7 +81,7 @@ class LoginFormLayout(QFormLayout):
         LoginFormLayout.f = frame
 
         hlayout = QHBoxLayout()
-        hlayout.setContentsMargins(0, 8, 0, 4)
+        hlayout.setContentsMargins(0, 8, 0, 0)
 
         LoginFormLayout.admin = QLineEdit()
         LoginFormLayout.password = QLineEdit()
@@ -167,35 +167,53 @@ class TableDisplay(QTableWidget):
 
         if data is not None:
             for row_index, row_data in enumerate(data):
-                # self.insertRow(row_index)
                 for column_index, column_data in enumerate(row_data):
-                    item = QTableWidgetItem(str(column_data))
-                    cell_widget = self.__CellWidget()
-                    self.setItem(row_index, column_index, item)
-                    self.setCellWidget(row_index, 7, cell_widget)
+                    if column_index == 0:
+                        cell_widget = self.__CellWidget(self, column_data)
+                        self.setCellWidget(row_index, 7, cell_widget)
 
-            # for i in range(employee.count):
+                    item = QTableWidgetItem(str(column_data))
+                    self.setItem(row_index, column_index, item)
 
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)
 
         self.adjustSize()
-
-    @staticmethod
-    def updated():
-        TableDisplay.update()
+        self.update()
 
     class __CellWidget(QWidget):
-        def __init__(self):
+        emp_id: int
+
+        def __init__(self, table=QTableWidget, emp_id=int):
+            self.employee = Employee()
+            self.table = table
             super().__init__()
+
+            self.emp_id = emp_id
             cell_layout = QHBoxLayout()
             update = QPushButton("Edit")
             update.setObjectName("update")
+            update.clicked.connect(lambda: print(self.emp_id))
 
             delete = QPushButton("Delete")
             delete.setObjectName("delete")
+            delete.clicked.connect(self.__delete)
 
             cell_layout.addWidget(update)
             cell_layout.addWidget(delete)
             cell_layout.setContentsMargins(2, 4, 2, 4)
+
             self.setLayout(cell_layout)
+
+        def __delete(self):
+            msg = QMessageBox()
+
+            if self.employee.delete(self.emp_id):
+                msg.information(
+                    msg, "Delete", "Requried to logout", msg.StandardButton.Close)
+                self.table.update()
+                print("Deleted")
+            else:
+                msg.critical(
+                    msg, "Delete", "Already deleted", msg.StandardButton.Close)
+                print("not Deleted")
