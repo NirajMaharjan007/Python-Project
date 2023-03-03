@@ -48,7 +48,7 @@ QDialog {
 }
 
 QPushButton {
-  padding: 4px 8px;
+  padding: 2px;
   width: fit-content;
 }
 
@@ -59,4 +59,42 @@ QAction::item:selected {
   background-color: #95bdff;
   padding: 1.26px 1.2px;
   margin: 0;
+}
+
+#update {
+  color: #fff;
+  background-color: #248544;
+  border-color: #28a745;
+}
+
+#update:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+#update.disabled,
+#update:disabled {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+#delete {
+  color: #fff;
+  background-color: #b90c1d;
+  border-color: #dc3545;
+}
+
+#delete:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+#delete.disabled,
+#delete:disabled {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
 }

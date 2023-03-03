@@ -18,8 +18,9 @@ QLabel {
 }
 
 QPushButton {
-  padding: 4px 8px;
-  width: fit-content;
+  padding: 2px 4px;
+  width: max-content;
+  height: 100%;
 }
 
 #login {
