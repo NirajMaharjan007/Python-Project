@@ -44,5 +44,5 @@ class FrameActivity(QWidget):
             self.setStyleSheet(style)
 
         LoginActivity(self)
-        self.setGeometry(250, 200, 850, 450)
+        self.setGeometry(250, 200, 900, 450)
         self.show()
