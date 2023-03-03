@@ -103,10 +103,20 @@ class Employee:
             print("Error =>", err)
             return None
 
-    def get_employeeID(self):
+    def delete(self, emp_id=int):
         try:
-            sql = ""
+            query = f"DELETE FROM employees WHERE emp_id='{emp_id}'"
+            self.cur.execute(query)
+            num_deleted_rows = self.cur.rowcount
+            self.conn.commit()
+
+            if num_deleted_rows > 0:
+                print("Rows were deleted")
+                return True
+
+            else:
+                raise Exception("Can not delete employee")
 
         except Exception as err:
-            print(err)
-            return -1
+            print("Error =>", err)
+            return False
