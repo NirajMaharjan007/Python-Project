@@ -2,10 +2,10 @@ from PyQt6.QtWidgets import QWidget, QApplication, QMessageBox, QMainWindow
 from data.database import get_connection
 from panels.activities import Login, LoginActivity
 
-import sys
+from sys import exit, argv
 
 
-app = QApplication(sys.argv)
+app = QApplication(argv)
 
 
 class Frame(QWidget):
@@ -26,7 +26,7 @@ class Frame(QWidget):
                                          QMessageBox.StandardButton.Ok)
 
             if reply == QMessageBox.StandardButton.Ok:
-                sys.exit(0)
+                exit(0)
 
         self.move(500, 300)
         self.adjustSize()
@@ -44,7 +44,5 @@ class FrameActivity(QWidget):
             self.setStyleSheet(style)
 
         LoginActivity(self)
-        self.setGeometry(300, 250, 512, 300)
-        self.adjustSize()
-        self.update()
+        self.setGeometry(250, 200, 850, 450)
         self.show()
