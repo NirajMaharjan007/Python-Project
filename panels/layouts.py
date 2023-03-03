@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt, QAbstractTableModel
+from PyQt6.QtCore import Qt
 from data.database import Employee, get_login
 from sys import exit
 import frame
@@ -14,12 +14,16 @@ class Container(QVBoxLayout):
 
         self.frame = Container.frame = frame
 
+        self.setContentsMargins(8, 4, 8, 4)
+        self.setAlignment(Qt.AlignmentFlag.AlignTop |
+                          Qt.AlignmentFlag.AlignVCenter)
+
         hlayout = QHBoxLayout()
         vlayout = QVBoxLayout()
         employee = Employee()
 
         hlayout.addLayout(vlayout)
-        hlayout.setAlignment(Qt.AlignmentFlag.AlignLeft
+        hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter
                              | Qt.AlignmentFlag.AlignTop)
 
         inside_frame = QFrame(self.frame)
@@ -28,8 +32,8 @@ class Container(QVBoxLayout):
         inside_frame.setLayout(hlayout)
 
         header = QLabel('Welcome to Employee Dashboard!')
-        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
-                            Qt.AlignmentFlag.AlignTop)
+        header.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                            Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
 
         self.addWidget(header)
@@ -52,7 +56,6 @@ class EmployeeFrame(QFrame):
         super().__init__()
 
         vlay = QVBoxLayout()
-        hlay = QHBoxLayout()
 
         table = TableDisplay()
 
@@ -64,7 +67,6 @@ class EmployeeFrame(QFrame):
         self.setFrameShadow(QFrame.Shadow.Raised)
 
         vlay.addWidget(table)
-        vlay.addLayout(hlay)
 
         self.setLayout(vlay)
 
@@ -79,7 +81,7 @@ class LoginFormLayout(QFormLayout):
         LoginFormLayout.f = frame
 
         hlayout = QHBoxLayout()
-        hlayout.setContentsMargins(0, 8, 0, 0)
+        hlayout.setContentsMargins(0, 8, 0, 4)
 
         LoginFormLayout.admin = QLineEdit()
         LoginFormLayout.password = QLineEdit()
@@ -149,7 +151,7 @@ class TableDisplay(QTableWidget):
         employee = Employee()
 
         header_labels = ["emp_id", "Emp_name", "address", "email",
-                         "dob", "gender", "phone_no"]
+                         "dob", "gender", "phone_no", ""]
 
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
@@ -168,11 +170,32 @@ class TableDisplay(QTableWidget):
                 # self.insertRow(row_index)
                 for column_index, column_data in enumerate(row_data):
                     item = QTableWidgetItem(str(column_data))
+                    cell_widget = self.__CellWidget()
                     self.setItem(row_index, column_index, item)
+                    self.setCellWidget(row_index, 7, cell_widget)
+
+            # for i in range(employee.count):
 
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch)
 
-    class Button(QWidget):
+        self.adjustSize()
+
+    @staticmethod
+    def updated():
+        TableDisplay.update()
+
+    class __CellWidget(QWidget):
         def __init__(self):
-            pass
+            super().__init__()
+            cell_layout = QHBoxLayout()
+            update = QPushButton("Edit")
+            update.setObjectName("update")
+
+            delete = QPushButton("Delete")
+            delete.setObjectName("delete")
+
+            cell_layout.addWidget(update)
+            cell_layout.addWidget(delete)
+            cell_layout.setContentsMargins(2, 4, 2, 4)
+            self.setLayout(cell_layout)
