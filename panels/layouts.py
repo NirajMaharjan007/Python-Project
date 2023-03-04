@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from data.database import Employee, get_login
+from panels.dialogs import EmployeeDialog
 from sys import exit
 import frame
 
@@ -13,6 +14,9 @@ class Container(QVBoxLayout):
         super().__init__()
 
         self.frame = Container.frame = frame
+
+        employee_frame = EmployeeFrame(self.frame)
+        inside_frame = QFrame(self.frame)
 
         self.setContentsMargins(8, 4, 8, 4)
         self.setAlignment(Qt.AlignmentFlag.AlignTop |
@@ -26,7 +30,6 @@ class Container(QVBoxLayout):
         hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter
                              | Qt.AlignmentFlag.AlignTop)
 
-        inside_frame = QFrame(self.frame)
         inside_frame.setFrameShape(QFrame.Shape.WinPanel)
         inside_frame.setFrameShadow(QFrame.Shadow.Raised)
         inside_frame.setLayout(hlayout)
@@ -41,11 +44,12 @@ class Container(QVBoxLayout):
         label = QLabel("Employee Summary")
         label.setObjectName("header2_underline")
         vlayout.addWidget(label)
-        vlayout.addWidget(QLabel("Employees count: "
-                                 + str(employee.count)))
+        employee_frame.table.update()
+        vlayout.addWidget(QLabel("Employees count: " +
+                          str(employee_frame.table.rowCount())))
 
         self.addWidget(inside_frame)
-        self.addWidget(EmployeeFrame(self.frame))
+        self.addWidget(employee_frame)
 
 
 class EmployeeFrame(QFrame):
@@ -57,7 +61,7 @@ class EmployeeFrame(QFrame):
 
         vlay = QVBoxLayout()
 
-        table = TableDisplay()
+        self.table = TableDisplay()
 
         blayout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
         blayout.setContentsMargins(0, 0, 0, 0)
@@ -68,12 +72,13 @@ class EmployeeFrame(QFrame):
         header.setObjectName("header2_underline")
 
         blayout.addWidget(header)
+
         vlay.addLayout(blayout)
 
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
 
-        vlay.addWidget(table)
+        vlay.addWidget(self.table)
 
         self.setLayout(vlay)
 
@@ -150,12 +155,13 @@ class LoginFormLayout(QFormLayout):
 
 
 class TableDisplay(QTableWidget):
-    # frame: QWidget
 
     def __init__(self):
         super().__init__()
 
         employee = Employee()
+
+        EmployeeDialog.set_tableWidget(self)
 
         header_labels = ["emp_id", "Emp_name", "address", "email",
                          "dob", "gender", "phone_no", ""]
@@ -197,6 +203,7 @@ class TableDisplay(QTableWidget):
         def __init__(self, table=QTableWidget, emp_id=int):
             self.employee = Employee()
             self.table = table
+
             super().__init__()
 
             self.emp_id = emp_id
@@ -226,14 +233,13 @@ class TableDisplay(QTableWidget):
                     # Get the row index of the button that was clicked
                     button = self.sender()
                     row = button.property("row")
+                    self.table.update()
 
                     # Remove the row from the table
                     self.table.removeRow(row)
                     msg.information(
                         msg, "Delete", "data deleted", msg.StandardButton.Close)
-                    self.table.update()
                     print("Deleted")
 
         def __edit(self):
             msg = QMessageBox()
-            pass

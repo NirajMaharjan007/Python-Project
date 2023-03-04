@@ -78,6 +78,12 @@ class AdminDialog(QDialog):
 
 
 class EmployeeDialog(QDialog):
+    __table: QTableWidget
+
+    @staticmethod
+    def set_tableWidget(table=QTableWidget):
+        EmployeeDialog.__table = table
+
     def __init__(self):
         super().__init__()
 
@@ -166,6 +172,9 @@ class EmployeeDialog(QDialog):
                 raise Exception("The Text field should not be blank")
 
             elif self.emp.set_employee(name, address, email, dob, gender, phone):
+                row_position = self.__table.rowCount()
+                self.__table.insertRow(row_position)
+
                 status = "Successfully added employee details\nRequried to re-login"
                 message_box.information(message_box, 'Success', status,
                                         QMessageBox.StandardButton.Close)
