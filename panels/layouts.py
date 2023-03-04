@@ -59,9 +59,16 @@ class EmployeeFrame(QFrame):
 
         table = TableDisplay()
 
+        blayout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
+        blayout.setContentsMargins(0, 0, 0, 0)
+        blayout.setAlignment(Qt.AlignmentFlag.AlignLeft |
+                             Qt.AlignmentFlag.AlignBottom)
+
         header = QLabel("Employees Details",  self.f)
         header.setObjectName("header2_underline")
-        vlay.addWidget(header)
+
+        blayout.addWidget(header)
+        vlay.addLayout(blayout)
 
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
@@ -211,21 +218,21 @@ class TableDisplay(QTableWidget):
         def __delete(self):
             msg = QMessageBox()
 
-            if self.employee.delete(self.emp_id):
-                # Get the row index of the button that was clicked
-                button = self.sender()
-                row = button.property("row")
+            result = QMessageBox.critical(
+                msg, "Delete", "Are you sure you want to", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
-                # Remove the row from the table
-                self.table.removeRow(row)
-                msg.information(
-                    msg, "Delete", "data deleted", msg.StandardButton.Close)
-                self.table.update()
-                print("Deleted")
-            else:
-                msg.critical(
-                    msg, "Delete", "Already deleted", msg.StandardButton.Close)
-                print("not Deleted")
+            if result == QMessageBox.StandardButton.Yes:
+                if self.employee.delete(self.emp_id):
+                    # Get the row index of the button that was clicked
+                    button = self.sender()
+                    row = button.property("row")
+
+                    # Remove the row from the table
+                    self.table.removeRow(row)
+                    msg.information(
+                        msg, "Delete", "data deleted", msg.StandardButton.Close)
+                    self.table.update()
+                    print("Deleted")
 
         def __edit(self):
             msg = QMessageBox()
