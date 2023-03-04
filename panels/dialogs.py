@@ -4,6 +4,8 @@ from PyQt6.QtCore import Qt
 from data.database import Employee
 from datetime import datetime
 
+import panels.layouts as lay
+
 
 class Dialog(QDialog):
     def __init__(self):
@@ -78,10 +80,10 @@ class AdminDialog(QDialog):
 
 
 class EmployeeDialog(QDialog):
-    __table: QTableWidget
+    __table: lay.TableDisplay
 
     @staticmethod
-    def set_tableWidget(table=QTableWidget):
+    def set_tableWidget(table=lay.TableDisplay):
         EmployeeDialog.__table = table
 
     def __init__(self):
@@ -172,8 +174,18 @@ class EmployeeDialog(QDialog):
                 raise Exception("The Text field should not be blank")
 
             elif self.emp.set_employee(name, address, email, dob, gender, phone):
+                emp_id = int(self.emp.get_empId())
+                list = [emp_id, name, address, email,
+                        dob, gender, phone]
+
                 row_position = self.__table.rowCount()
                 self.__table.insertRow(row_position)
+                self.__table.setCellWidget(
+                    row_position, 7, self.__table.get_widget(self.__table, emp_id))
+
+                for column in range(len(list)):
+                    item = QTableWidgetItem(str(list[column]))
+                    self.__table.setItem(row_position, column, item)
 
                 status = "Successfully added employee details\nRequried to re-login"
                 message_box.information(message_box, 'Success', status,

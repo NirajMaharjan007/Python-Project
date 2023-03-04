@@ -2,9 +2,9 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from data.database import Employee, get_login
-from panels.dialogs import EmployeeDialog
 from sys import exit
 import frame
+import panels.dialogs as dialog
 
 
 class Container(QVBoxLayout):
@@ -24,7 +24,6 @@ class Container(QVBoxLayout):
 
         hlayout = QHBoxLayout()
         vlayout = QVBoxLayout()
-        employee = Employee()
 
         hlayout.addLayout(vlayout)
         hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter
@@ -161,7 +160,7 @@ class TableDisplay(QTableWidget):
 
         employee = Employee()
 
-        EmployeeDialog.set_tableWidget(self)
+        dialog.EmployeeDialog.set_tableWidget(self)
 
         header_labels = ["emp_id", "Emp_name", "address", "email",
                          "dob", "gender", "phone_no", ""]
@@ -195,18 +194,25 @@ class TableDisplay(QTableWidget):
         self.adjustSize()
         self.update()
 
+    def get_widget(self, table: QTableWidget, data):
+        return self.__CellWidget(table, data)
+
     class __CellWidget(QWidget):
         emp_id: int
         update: QPushButton
         delete: QPushButton
 
+        def set_empId(self, emp_id=int):
+            self.emp_id = emp_id
+
+        # def __init__(self, table=QTableWidget):
         def __init__(self, table=QTableWidget, emp_id=int):
             self.employee = Employee()
+            self.emp_id = emp_id
             self.table = table
 
             super().__init__()
 
-            self.emp_id = emp_id
             cell_layout = QHBoxLayout()
             self.update = QPushButton("Edit")
             self.update.setObjectName("update")
@@ -233,7 +239,6 @@ class TableDisplay(QTableWidget):
                     # Get the row index of the button that was clicked
                     button = self.sender()
                     row = button.property("row")
-                    self.table.update()
 
                     # Remove the row from the table
                     self.table.removeRow(row)
