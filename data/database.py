@@ -69,7 +69,9 @@ class Employee:
 
     def get_count(self):
         try:
-            self.cur.execute("SELECT COUNT(*) FROM employees")
+            admin_id = get_adminId()
+            self.cur.execute(
+                f"SELECT COUNT(*) FROM employees  WHERE admin_id = '{admin_id}'")
             result = self.cur.fetchone()[0]
             if result is not None:
                 return result

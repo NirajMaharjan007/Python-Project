@@ -187,7 +187,7 @@ class EmployeeDialog(QDialog):
                     item = QTableWidgetItem(str(list[column]))
                     self.__table.setItem(row_position, column, item)
 
-                status = "Successfully added employee details\nRequried to re-login"
+                status = "Successfully added employee details"
                 message_box.information(message_box, 'Success', status,
                                         QMessageBox.StandardButton.Close)
             else:

@@ -45,7 +45,7 @@ class Container(QVBoxLayout):
         vlayout.addWidget(label)
         employee_frame.table.update()
         vlayout.addWidget(QLabel("Employees count: " +
-                          str(employee_frame.table.rowCount())))
+                          str(Employee().get_count())))
 
         self.addWidget(inside_frame)
         self.addWidget(employee_frame)
