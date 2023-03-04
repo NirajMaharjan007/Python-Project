@@ -55,6 +55,7 @@ class Employee:
     count: int
 
     def __init__(self):
+        self.emp_id = randint(0, 3000)
         try:
             self.conn = get_connection()
             if self.conn is not None:
@@ -79,9 +80,12 @@ class Employee:
             print(err)
             return -1
 
+    def get_empId(self):
+        return self.emp_id
+
     def set_employee(self, name, address, email, dob, gender, phone):
         try:
-            emp_id = randint(0, 3000)
+            emp_id = self.emp_id
             admin_id = get_adminId()
             sql = f"INSERT INTO employees VALUES ('{emp_id}', '{name}', '{address}', '{email}', '{dob}', '{gender}', '{phone}', '{admin_id}')"
             print(sql)
