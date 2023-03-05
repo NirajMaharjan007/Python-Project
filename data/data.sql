@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS my_database;
 
+USE my_database;
+
 create table
     admins (
         id int(11) NOT NULL primary KEY,
