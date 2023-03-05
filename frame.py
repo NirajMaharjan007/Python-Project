@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QApplication, QMessageBox, QMainWindow
+from PyQt6.QtWidgets import QWidget, QApplication, QMessageBox
 from data.database import get_connection
 from panels.activities import Login, LoginActivity
 
@@ -42,7 +42,6 @@ class FrameActivity(QWidget):
         with open("./styles/custom.css") as f:
             style = f.read()
             self.setStyleSheet(style)
-
         LoginActivity(self)
         self.setGeometry(250, 200, 900, 450)
         self.show()
