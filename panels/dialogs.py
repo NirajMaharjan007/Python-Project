@@ -1,3 +1,4 @@
+from random import randint
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
@@ -82,8 +83,6 @@ class AdminDialog(QDialog):
 class EmployeeDialog(QDialog):
     __table: lay.TableDisplay
 
-    isUpdate: bool
-
     @staticmethod
     def set_tableWidget(table=lay.TableDisplay):
         EmployeeDialog.__table = table
@@ -100,7 +99,7 @@ class EmployeeDialog(QDialog):
             style = f.read()
             self.setStyleSheet(style)
 
-        self.setWindowTitle("Employees detail")
+        self.setWindowTitle("Add Employees detail")
 
         form = QFormLayout()
         hlayout = QHBoxLayout()
@@ -163,6 +162,7 @@ class EmployeeDialog(QDialog):
             message_box = QMessageBox()
             message_box.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
 
+            emp_id = randint(1, 3000)
             name = self.name.text()
             address = self.address.text()
             email = self.email.text()
@@ -172,46 +172,128 @@ class EmployeeDialog(QDialog):
 
             print(emp_id, name, address, email, dob, gender, phone)
 
-            if self.isUpdate == False:
-                if name == '' or address == '' or email == '':
-                    raise Exception("The Text field should not be blank")
+            if name == '' or address == '' or email == '':
+                raise Exception("The Text field should not be blank")
 
-                elif self.emp.set_employee(name, address, email, dob, gender, phone):
-                    emp_id = int(self.emp.get_empId())
-                    list = [emp_id, name, address, email,
-                            dob, gender, phone]
-                    row_position = self.__table.rowCount()
-                    widget = self.__table.get_widget(self.__table, emp_id)
-                    widget.delete.setProperty("row", row_position)
-                    self.__table.insertRow(row_position)
-                    self.__table.setCellWidget(
-                        row_position, 7, widget)
+            elif self.emp.set_employee(emp_id, name, address, email, dob, gender, phone):
+                list = [emp_id, name, address, email,
+                        dob, gender, phone]
+                row_position = self.__table.rowCount()
+                widget = self.__table.get_widget(self.__table, emp_id)
+                widget.delete.setProperty("row", row_position)
+                self.__table.insertRow(row_position)
+                self.__table.setCellWidget(
+                    row_position, 7, widget)
 
-                    for column in range(len(list)):
-                        item = QTableWidgetItem(str(list[column]))
-                        self.__table.setItem(row_position, column, item)
+                for column in range(len(list)):
+                    item = QTableWidgetItem(str(list[column]))
+                    self.__table.setItem(row_position, column, item)
 
-                    status = "Successfully added employee details"
-                    message_box.information(message_box, 'Success', status,
-                                            QMessageBox.StandardButton.Close)
-
-                else:
-                    raise Exception("Failed to add employee details")
-
-            elif self.isUpdate == True:
-                if self.emp.update_info(emp_id, name, address, email, dob, gender, phone):
-                    status = "Successfully updated employee details"
-                    message_box.information(message_box, 'Success', status,
-                                            QMessageBox.StandardButton.Close)
-                else:
-                    status = "Failed, updated employee details"
-                    message_box.critical(message_box, 'Failed', status,
-                                         QMessageBox.StandardButton.Close)
+                status = "Successfully added employee details"
+                message_box.information(message_box, 'Success', status,
+                                        QMessageBox.StandardButton.Close)
 
             else:
-                raise Exception("Something went wrong")
+                raise Exception("Failed to add employee details")
 
         except Exception as err:
             print(err)
             message_box.critical(message_box, 'Error',
                                  str(err), QMessageBox.StandardButton.Close)
+
+
+class EditEmployeeDialog(QDialog):
+    def __init__(self, emp_id):
+        super().__init__()
+        self.emp = Employee()
+        self.emp_id = emp_id
+
+        self.setWindowFlags(self.windowFlags() |
+                            Qt.WindowType.WindowStaysOnTopHint)
+
+        with open("./styles/styles.css") as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
+        self.setWindowTitle("Update Employees detail")
+
+        form = QFormLayout()
+        hlayout = QHBoxLayout()
+        radio_layout = QHBoxLayout()
+
+        male_radio = QRadioButton("Male")
+        female_radio = QRadioButton("Female")
+        male_radio.toggled.connect(self.__set_gender)
+        female_radio.toggled.connect(self.__set_gender)
+
+        radio_layout.addWidget(QLabel("Select Gender:"))
+        radio_layout.addWidget(male_radio)
+        radio_layout.addWidget(female_radio)
+
+        self.name = QLineEdit()
+        self.name.setObjectName("form-control")
+
+        self.address = QLineEdit()
+        self.address.setObjectName("form-control")
+
+        self.email = QLineEdit()
+        self.email.setObjectName("form-control")
+
+        self.dob = QLineEdit()
+        self.dob.setObjectName("form-control")
+
+        self.phone = QLineEdit()
+        self.phone.setObjectName("form-control")
+
+        update_btn = QPushButton("Update")
+        update_btn.setObjectName("login")
+        update_btn.clicked.connect(self.__update)
+
+        cancel = QPushButton("Cancel")
+        cancel.setObjectName("cancel")
+        cancel.clicked.connect(lambda: self.close())
+
+        hlayout.addWidget(update_btn)
+        hlayout.addWidget(cancel)
+
+        form.addRow("Employee's name", self.name)
+        form.addRow("Employee's email", self.email)
+        form.addRow("Employee's address", self.address)
+        form.addRow("Employee's date of birth", self.dob)
+        form.addRow("Employee's phone number", self.phone)
+        form.addRow(radio_layout)
+        form.addRow(hlayout)
+
+        self.setLayout(form)
+        self.setFixedSize(410, 235)
+        self.adjustSize()
+
+    def __set_gender(self):
+        sender = self.sender()
+        if sender.isChecked():
+            self.gender = sender.text()
+
+    def __update(self):
+        message_box = QMessageBox()
+        message_box.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
+        try:
+            name = self.name.text()
+            address = self.address.text()
+            email = self.email.text()
+            dob = datetime.strptime(self.dob.text(), '%Y-%m-%d').date()
+            gender = self.gender
+            phone = int(self.phone.text())
+
+            if self.emp.update_info(self.emp_id, name, address, email, dob, gender, phone):
+                status = "Successfully updated employee details\nRequired to Logout from session"
+                message_box.information(message_box, 'Success', status,
+                                        QMessageBox.StandardButton.Close)
+            else:
+                status = "Failed, updated employee details"
+                message_box.critical(message_box, 'Failed', status,
+                                     QMessageBox.StandardButton.Close)
+
+        except Exception as e:
+            print("Error =>", e)
+            message_box.critical(message_box, 'Error',
+                                 str(e), QMessageBox.StandardButton.Close)

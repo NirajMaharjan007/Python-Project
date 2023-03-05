@@ -247,6 +247,5 @@ class TableDisplay(QTableWidget):
                     print("Deleted")
 
         def __edit(self):
-            emp_dialog = dialog.EmployeeDialog()
-            emp_dialog.isUpdate = True
+            emp_dialog = dialog.EditEmployeeDialog(self.emp_id)
             emp_dialog.exec()
