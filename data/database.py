@@ -109,9 +109,28 @@ class Employee:
             print("Error =>", err)
             return None
 
-    def edit(self, emp_id=int, name=None, address=None, email=None, dob=None, gender=None, phone=None):
+    def has_info(self):
         try:
-            sql = ""
+            emp_id = self.get_empId()
+            print(emp_id)
+            sql = f"Select * from employees where emp_id = '{emp_id}'"
+            result = self.cur.execute(sql)
+            if result is not None:
+                return True
+            else:
+                return False
+        except Exception as err:
+            print("Error =>", err)
+            return False
+
+    def update_info(self, emp_id, name, address, email, dob, gender, phone):
+        try:
+            print(emp_id)
+            sql = f"Update employees set emp_name = '{name}',address='{address}',email='{email}',dob='{dob}',gender='{gender}',phone_no='{phone}' where emp_id = '{emp_id}'"
+            self.cur.execute(sql)
+            self.conn.commit()
+            return True
+
         except Exception as err:
             print("Error =>", err)
             return False
