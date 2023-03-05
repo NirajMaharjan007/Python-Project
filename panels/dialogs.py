@@ -177,11 +177,12 @@ class EmployeeDialog(QDialog):
                 emp_id = int(self.emp.get_empId())
                 list = [emp_id, name, address, email,
                         dob, gender, phone]
-
                 row_position = self.__table.rowCount()
+                widget = self.__table.get_widget(self.__table, emp_id)
+                widget.delete.setProperty("row", row_position)
                 self.__table.insertRow(row_position)
                 self.__table.setCellWidget(
-                    row_position, 7, self.__table.get_widget(self.__table, emp_id))
+                    row_position, 7, widget)
 
                 for column in range(len(list)):
                     item = QTableWidgetItem(str(list[column]))

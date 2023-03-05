@@ -87,7 +87,7 @@ class Employee:
 
     def set_employee(self, name, address, email, dob, gender, phone):
         try:
-            emp_id = self.emp_id
+            emp_id = self.get_empId()
             admin_id = get_adminId()
             sql = f"INSERT INTO employees VALUES ('{emp_id}', '{name}', '{address}', '{email}', '{dob}', '{gender}', '{phone}', '{admin_id}')"
             print(sql)
