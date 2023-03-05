@@ -60,6 +60,7 @@ class Menu:
         admin_info.triggered.connect(lambda: admin_dialog.exec())
 
         emp_set = QAction("Add Employees", self.fr)
+        emp_dialog.isUpdate = False
         emp_set.triggered.connect(lambda: emp_dialog.exec())
 
         logout = QAction('Logout', self.fr)

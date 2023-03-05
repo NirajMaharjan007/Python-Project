@@ -175,10 +175,10 @@ class TableDisplay(QTableWidget):
         self.setHorizontalHeaderLabels(header_labels)
         self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
-        data = employee.get_employee_detail()
+        self.data = employee.get_employee_detail()
 
-        if data is not None:
-            for row_index, row_data in enumerate(data):
+        if self.data is not None:
+            for row_index, row_data in enumerate(self.data):
                 for column_index, column_data in enumerate(row_data):
                     if column_index == 0:
                         cell_widget = self.__CellWidget(self, column_data)
@@ -216,7 +216,7 @@ class TableDisplay(QTableWidget):
             cell_layout = QHBoxLayout()
             self.update = QPushButton("Edit")
             self.update.setObjectName("update")
-            self.update.clicked.connect(lambda: print(self.emp_id))
+            self.update.clicked.connect(self.__edit)
 
             self.delete = QPushButton("Delete")
             self.delete.setObjectName("delete")
@@ -247,4 +247,6 @@ class TableDisplay(QTableWidget):
                     print("Deleted")
 
         def __edit(self):
-            msg = QMessageBox()
+            emp_dialog = dialog.EmployeeDialog()
+            emp_dialog.isUpdate = True
+            emp_dialog.exec()
