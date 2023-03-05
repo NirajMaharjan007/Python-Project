@@ -13,7 +13,9 @@ class Container(QVBoxLayout):
     def __init__(self, frame=QWidget):
         super().__init__()
 
-        self.frame = Container.frame = frame
+        Container.frame = frame
+
+        tab = Tab(self.frame)
 
         employee_frame = EmployeeFrame(self.frame)
         inside_frame = QFrame(self.frame)
@@ -25,30 +27,47 @@ class Container(QVBoxLayout):
         hlayout = QHBoxLayout()
         vlayout = QVBoxLayout()
 
-        hlayout.addLayout(vlayout)
-        hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter
-                             | Qt.AlignmentFlag.AlignTop)
-
-        inside_frame.setFrameShape(QFrame.Shape.WinPanel)
-        inside_frame.setFrameShadow(QFrame.Shadow.Raised)
-        inside_frame.setLayout(hlayout)
-
         header = QLabel('Welcome to Employee Dashboard!')
         header.setAlignment(Qt.AlignmentFlag.AlignCenter |
                             Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
+        vlayout.addWidget(header)
 
-        self.addWidget(header)
+        hlayout.addLayout(vlayout)
+        hlayout.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        inside_frame.setFrameShape(QFrame.Shape.Panel)
+        inside_frame.setFrameShadow(QFrame.Shadow.Raised)
+        inside_frame.setLayout(hlayout)
 
         label = QLabel("Employee Summary")
         label.setObjectName("header2_underline")
-        vlayout.addWidget(label)
         employee_frame.table.update()
+
+        vlayout.addWidget(label)
         vlayout.addWidget(QLabel("Employees count: " +
                           str(Employee().get_count())))
+        vlayout.addWidget(employee_frame)
 
-        self.addWidget(inside_frame)
-        self.addWidget(employee_frame)
+        # self.addWidget(inside_frame)
+        # self.addWidget(employee_frame)
+
+        tab.addTab(inside_frame, "Main Tab")
+        # tab.addTab(employee_frame, "tab_two")
+        tab.show()
+
+        self.addWidget(tab)
+
+
+class EmployeePerformance(QFrame):
+    # => TODO: Find a better way to do this
+
+    def __init__(self):
+        super().__init__()
+
+        self.setFrameShape(QFrame.Shape.Box)
+        self.setFrameShadow(QFrame.Shadow.Plain)
+        self.setLayout(QVBoxLayout())
 
 
 class EmployeeFrame(QFrame):
@@ -59,13 +78,15 @@ class EmployeeFrame(QFrame):
         super().__init__()
 
         vlay = QVBoxLayout()
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
 
         self.table = TableDisplay()
 
         blayout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
         blayout.setContentsMargins(0, 0, 0, 0)
         blayout.setAlignment(Qt.AlignmentFlag.AlignLeft |
-                             Qt.AlignmentFlag.AlignBottom)
+                             Qt.AlignmentFlag.AlignTop)
 
         header = QLabel("Employees Details",  self.f)
         header.setObjectName("header2_underline")
@@ -74,8 +95,8 @@ class EmployeeFrame(QFrame):
 
         vlay.addLayout(blayout)
 
-        self.setFrameShape(QFrame.Shape.WinPanel)
-        self.setFrameShadow(QFrame.Shadow.Raised)
+        self.setFrameShape(QFrame.Shape.Box)
+        self.setFrameShadow(QFrame.Shadow.Sunken)
 
         vlay.addWidget(self.table)
 
@@ -141,7 +162,7 @@ class LoginFormLayout(QFormLayout):
                 QMessageBox.question(None, 'Error', "Admin name or Password is incorrect",
                                      QMessageBox.StandardButton.Ok)
 
-        @staticmethod
+        @ staticmethod
         def cancel():
             reply = QMessageBox.warning(None, 'Message', "Are you sure about that?",
                                         QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No)
@@ -249,3 +270,12 @@ class TableDisplay(QTableWidget):
         def __edit(self):
             emp_dialog = dialog.EditEmployeeDialog(self.emp_id)
             emp_dialog.exec()
+
+
+class Tab(QTabWidget):
+    def __init__(self, frame=QWidget):
+        super().__init__()
+        self.frame = frame
+        self.setWindowTitle("Tab Example")
+        self.resize(400, 300)
+        self.setFocusPolicy(Qt.FocusPolicy.TabFocus)
