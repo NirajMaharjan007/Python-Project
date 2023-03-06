@@ -17,8 +17,8 @@ class Container(QVBoxLayout):
 
         tab = QTabWidget()
 
-        employee_frame = EmployeeFrame(self.frame)
-        inside_frame = QFrame(self.frame)
+        employee_frame = EmployeeFrame()
+        inside_frame = QFrame()
 
         self.setContentsMargins(8, 4, 8, 4)
         self.setAlignment(Qt.AlignmentFlag.AlignTop |
@@ -80,10 +80,7 @@ class EmployeePerformance(QFrame):
 
 
 class EmployeeFrame(QFrame):
-    f: QWidget
-
-    def __init__(self, f=QWidget):
-        EmployeeFrame.f = f
+    def __init__(self):
         super().__init__()
 
         vlay = QVBoxLayout()
@@ -97,7 +94,7 @@ class EmployeeFrame(QFrame):
         blayout.setAlignment(Qt.AlignmentFlag.AlignLeft |
                              Qt.AlignmentFlag.AlignTop)
 
-        header = QLabel("Employees Details",  self.f)
+        header = QLabel("Employees Details")
         header.setObjectName("header2_underline")
 
         blayout.addWidget(header)
