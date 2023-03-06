@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QApplication, QMessageBox
+from PyQt6.QtGui import QIcon
 from data.database import get_connection
 from panels.activities import Login, LoginActivity
 
@@ -10,8 +11,9 @@ app = QApplication(argv)
 
 class Frame(QWidget):
     def __init__(self):
-
         super().__init__()
+
+        self.setWindowIcon(QIcon('./resources/icon.png'))
 
         with open("./styles/styles.css") as f:
             style = f.read()
@@ -39,9 +41,12 @@ class FrameActivity(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.setWindowIcon(QIcon('./resources/icon.png'))
+
         with open("./styles/custom.css") as f:
             style = f.read()
             self.setStyleSheet(style)
         LoginActivity(self)
+
         self.setGeometry(200, 200, 950, 500)
         self.show()
