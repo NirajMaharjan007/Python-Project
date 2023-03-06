@@ -17,6 +17,7 @@ class Container(QVBoxLayout):
         tab = QTabWidget()
 
         employee_frame = EmployeeFrame()
+        employee_perform = EmployeePerformance()
         inside_frame = QFrame()
 
         self.setContentsMargins(8, 4, 8, 4)
@@ -52,7 +53,7 @@ class Container(QVBoxLayout):
         # self.addWidget(employee_frame)
 
         tab.addTab(inside_frame, "Main Tab")
-        tab.addTab(EmployeePerformance(), "Performance")
+        tab.addTab(employee_perform, "Performance")
         tab.adjustSize()
         tab.show()
 
@@ -68,12 +69,29 @@ class EmployeePerformance(QFrame):
         self.setFrameShadow(QFrame.Shadow.Sunken)
 
         vlay = QVBoxLayout()
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        table_vlay = QVBoxLayout()
+        table_perform = PerformanceTable()
+        table_frame = QFrame()
 
         header = QLabel("Details of Employee Performance")
-        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
-                            Qt.AlignmentFlag.AlignTop)
+        header.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                            Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
+
+        header2 = QLabel("Table of Employee Performance")
+        header2.setObjectName("header2_underline")
+        header2.setAlignment(Qt.AlignmentFlag.AlignBottom)
+
+        table_vlay.addWidget(header2)
+        table_vlay.addWidget(table_perform)
+
+        table_frame.setLayout(table_vlay)
+
         vlay.addWidget(header)
+        vlay.addWidget(table_frame)
 
         self.setLayout(vlay)
 

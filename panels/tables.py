@@ -102,19 +102,19 @@ class TableDisplay(QTableWidget):
 class PerformanceTable(QTableWidget):
     emp_id: int
 
-    def __init__(self, emp_id=int):
+    def __init__(self):
         super().__init__()
-        self.emp_id = emp_id
         employee = Employee()
-        self.data = employee.get_performence()
-        if self.data is not None:
-            for row_index, row_data in enumerate(self.data):
-                for column_index, column_data in enumerate(row_data):
-                    item = QTableWidgetItem(str(column_data))
-                    self.setItem(row_index, column_index, item)
 
-        else:
-            for row_index, row_data in enumerate(self.data):
-                for column_index, column_data in enumerate(row_data):
-                    item = QTableWidgetItem("None")
-                    self.setItem(row_index, column_index, item)
+        self.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows)
+        self.setSizePolicy(QSizePolicy.Policy.Preferred,
+                           QSizePolicy.Policy.Preferred)
+
+        self.setRowCount(employee.count)
+        self.setColumnCount(6)
+
+        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+
+        self.adjustSize()
