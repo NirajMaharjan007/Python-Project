@@ -104,6 +104,8 @@ class PerformanceTable(QTableWidget):
 
     def __init__(self):
         super().__init__()
+        header_labels = ["emp_id", "Emp_name", "result", "attitude",
+                         "project_completed", "attenance", ""]
         employee = Employee()
 
         self.setSelectionBehavior(
@@ -112,9 +114,49 @@ class PerformanceTable(QTableWidget):
                            QSizePolicy.Policy.Preferred)
 
         self.setRowCount(employee.count)
-        self.setColumnCount(6)
+        self.setColumnCount(7)
+        self.setHorizontalHeaderLabels(header_labels)
+
+        data = employee.get_performance()
+
+        if data is not None:
+            for row_index, row_data in enumerate(data):
+                for column_index, column_data in enumerate(row_data):
+                    if column_index == 0:
+                        cell_widget = self.__ButtonWidget(self, column_data)
+                        self.setCellWidget(row_index, 6, cell_widget)
+
+                    item = QTableWidgetItem(str(column_data))
+                    self.setItem(row_index, column_index, item)
 
         self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
         self.adjustSize()
+
+    class __ButtonWidget(QWidget):
+        emp_id: int
+        update_btn: QPushButton
+        add_btn: QPushButton
+
+        def __init__(self, table=QTableWidget, emp_id=int):
+            super().__init__()
+            self.table = table
+            self.emp_id = emp_id
+
+            hlay = QHBoxLayout()
+            hlay.setContentsMargins(4, 2, 4, 2)
+
+            self.add_btn = QPushButton("Add")
+            self.add_btn.setObjectName("info")
+            self.add_btn.clicked.connect(lambda: print(emp_id))
+
+            self.update_btn = QPushButton("Update")
+            self.update_btn.setObjectName("update")
+            self.update_btn.clicked.connect(lambda: print(emp_id))
+
+            # hlay.addWidget(self.add_btn)
+
+            hlay.addWidget(self.update_btn)
+
+            self.setLayout(hlay)
