@@ -15,7 +15,7 @@ class Container(QVBoxLayout):
 
         Container.frame = frame
 
-        tab = Tab(self.frame)
+        tab = QTabWidget()
 
         employee_frame = EmployeeFrame(self.frame)
         inside_frame = QFrame(self.frame)
@@ -53,7 +53,8 @@ class Container(QVBoxLayout):
         # self.addWidget(employee_frame)
 
         tab.addTab(inside_frame, "Main Tab")
-        # tab.addTab(employee_frame, "tab_two")
+        tab.addTab(EmployeePerformance(), "Performance")
+        tab.adjustSize()
         tab.show()
 
         self.addWidget(tab)
@@ -64,10 +65,18 @@ class EmployeePerformance(QFrame):
 
     def __init__(self):
         super().__init__()
-
         self.setFrameShape(QFrame.Shape.Box)
-        self.setFrameShadow(QFrame.Shadow.Plain)
-        self.setLayout(QVBoxLayout())
+        self.setFrameShadow(QFrame.Shadow.Sunken)
+
+        vlay = QVBoxLayout()
+
+        header = QLabel("Details of Employee Performance")
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
+        header.setObjectName("header")
+        vlay.addWidget(header)
+
+        self.setLayout(vlay)
 
 
 class EmployeeFrame(QFrame):
@@ -79,7 +88,7 @@ class EmployeeFrame(QFrame):
 
         vlay = QVBoxLayout()
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
-                          Qt.AlignmentFlag.AlignTop)
+                          Qt.AlignmentFlag.AlignBottom)
 
         self.table = TableDisplay()
 
@@ -270,12 +279,3 @@ class TableDisplay(QTableWidget):
         def __edit(self):
             emp_dialog = dialog.EditEmployeeDialog(self.emp_id)
             emp_dialog.exec()
-
-
-class Tab(QTabWidget):
-    def __init__(self, frame=QWidget):
-        super().__init__()
-        self.frame = frame
-        self.setWindowTitle("Tab Example")
-        self.resize(400, 300)
-        self.setFocusPolicy(Qt.FocusPolicy.TabFocus)
