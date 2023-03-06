@@ -133,10 +133,12 @@ class Employee:
             print("Error =>", err)
             return False
 
-    def get_performence(self, emp_id=int):
+    def get_performance(self):
         try:
-            print(emp_id)
-            sql = f"Select * from performance where emp_id = '{emp_id}'"
+            sql = "SELECT  employees.emp_id,emp_name, \
+            performance.result, performance.attitude, performance.project_completed,\
+            performance.attenance FROM employees\
+            LEFT JOIN performance ON employees.emp_id = performance.emp_id"
             self.cur.execute(sql)
             return self.cur
 

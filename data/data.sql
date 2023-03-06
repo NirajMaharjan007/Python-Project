@@ -36,3 +36,13 @@ create table
         attenance int,
         performance_id int PRIMARY key AUTO_INCREMENT
     );
+
+SELECT
+    employees.emp_id,
+    emp_name,
+    performance.result,
+    performance.attitude,
+    performance.project_completed,
+    performance.attenance
+FROM employees
+    LEFT JOIN performance ON employees.emp_id = performance.emp_id;
