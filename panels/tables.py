@@ -18,7 +18,7 @@ class TableDisplay(QTableWidget):
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
         self.setSizePolicy(QSizePolicy.Policy.Preferred,
-                           QSizePolicy.Policy.Preferred)
+                           QSizePolicy.Policy.Expanding)
 
         self.setRowCount(employee.count)
         self.setColumnCount(8)
@@ -105,11 +105,13 @@ class PerformanceTable(QTableWidget):
     refresh: QPushButton
 
     def get_btn(self) -> QPushButton:
+        self.refresh.setFixedSize(75, 30)
+        self.refresh.setObjectName("info")
         return self.refresh
 
     def __init__(self):
         super().__init__()
-        employee = Employee()
+        self.employee = Employee()
 
         PerformanceTable.refresh = QPushButton("Refresh")
 
@@ -119,13 +121,13 @@ class PerformanceTable(QTableWidget):
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
         self.setSizePolicy(QSizePolicy.Policy.Preferred,
-                           QSizePolicy.Policy.Preferred)
+                           QSizePolicy.Policy.Expanding)
 
-        self.setRowCount(employee.count)
+        self.setRowCount(self.employee.count)
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels(header_labels)
 
-        data = employee.get_performance()
+        data = self.employee.get_performance()
 
         if data is not None:
             for row_index, row_data in enumerate(data):

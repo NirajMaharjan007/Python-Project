@@ -72,6 +72,10 @@ class EmployeePerformance(QFrame):
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignTop)
 
+        hlay = QHBoxLayout()
+        hlay.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
         table_vlay = QVBoxLayout()
         table_perform = PerformanceTable()
         table_frame = QFrame()
@@ -85,7 +89,10 @@ class EmployeePerformance(QFrame):
         header2.setObjectName("header2_underline")
         header2.setAlignment(Qt.AlignmentFlag.AlignBottom)
 
-        table_vlay.addWidget(header2)
+        hlay.addWidget(header2)
+        hlay.addWidget(table_perform.get_btn())
+
+        table_vlay.addLayout(hlay)
         table_vlay.addWidget(table_perform)
 
         table_frame.setLayout(table_vlay)
