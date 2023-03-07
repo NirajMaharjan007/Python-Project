@@ -107,6 +107,7 @@ class PerformanceTable(QTableWidget):
     def get_btn(self) -> QPushButton:
         self.refresh.setFixedSize(75, 30)
         self.refresh.setObjectName("info")
+        self.refresh.clicked.connect(self.__updated)
         return self.refresh
 
     def __init__(self):
@@ -133,7 +134,8 @@ class PerformanceTable(QTableWidget):
             for row_index, row_data in enumerate(data):
                 for column_index, column_data in enumerate(row_data):
                     if column_index == 0:
-                        cell_widget = self.__ButtonWidget(self, column_data)
+                        cell_widget = self.cell_widget = self.__ButtonWidget(
+                            self, column_data)
 
                     if column_index >= 2:
                         if column_data == None:
@@ -151,10 +153,18 @@ class PerformanceTable(QTableWidget):
 
         self.adjustSize()
 
+    def __updated(self):
+        emp_id = self.cell_widget.get_empId()
+        count = self.employee.get_performance_count(emp_id)
+        print(count, "\n", emp_id)
+
     class __ButtonWidget(QWidget):
         emp_id: int
         update_btn: QPushButton
         add_btn: QPushButton
+
+        def get_empId(self):
+            return self.emp_id
 
         def __init__(self, table=QTableWidget, emp_id=int):
             super().__init__()
