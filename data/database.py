@@ -136,13 +136,15 @@ class Employee:
     def get_performance(self):
         try:
             admin_id = get_adminId()
-            sql = "SELECT  employees.emp_id,emp_name, \
-            performance.result, performance.attitude, performance.project_completed,\
-            performance.attenance FROM employees\
-            LEFT JOIN performance ON employees.emp_id = performance.emp_id\
-            where admin_id = " + str(admin_id)
+            sql = "SELECT employees.emp_id, emp_name,performance.result,\
+                performance.attitude, performance.project_completed, performance.present,\
+                performance.absent FROM employees LEFT JOIN\
+                performance ON employees.emp_id = performance.emp_id\
+                where admin_id = " + str(admin_id)
+
             self.cur.execute(sql)
-            return self.cur
+            result = self.cur.fetchall()
+            return result
 
         except Exception as err:
             print("Error =>", err)

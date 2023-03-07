@@ -33,7 +33,8 @@ create table
         result int,
         attitude int,
         project_completed int,
-        attenance int,
+        present int,
+        absent int,
         performance_id int PRIMARY key AUTO_INCREMENT
     );
 
@@ -43,11 +44,12 @@ SELECT
     performance.result,
     performance.attitude,
     performance.project_completed,
-    performance.attenance
+    performance.present,
+    performance.absent
 FROM employees
     LEFT JOIN performance ON employees.emp_id = performance.emp_id;
 
-INSERT INTO performance VALUES(280,1,1,1,15);
+INSERT INTO performance VALUES(280,1,1,1,1,2);
 
 SELECT count(*)
 FROM employees
