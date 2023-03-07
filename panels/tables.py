@@ -155,8 +155,8 @@ class PerformanceTable(QTableWidget):
 
     def __update_table(self):
         self.clearContents()
-        self.update()
         self.setRowCount(0)
+        self.update()
 
         data = Employee().get_performance()
 
