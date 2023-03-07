@@ -117,3 +117,13 @@ QAction::item:selected {
   background-color: #17a2b8;
   border-color: #17a2b8;
 }
+
+#refresh {
+  color: #000;
+  border-color: #b2edff;
+}
+
+#refresh:hover {
+  background-color: #b2edff;
+  border-color: #b2edff;
+}
