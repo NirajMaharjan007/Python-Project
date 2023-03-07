@@ -103,20 +103,6 @@ class Employee:
             print("Error =>", err)
             return None
 
-    def has_info(self):
-        try:
-            emp_id = self.get_empId()
-            print(emp_id)
-            sql = f"Select * from employees where emp_id = '{emp_id}'"
-            result = self.cur.execute(sql)
-            if result is not None:
-                return True
-            else:
-                return False
-        except Exception as err:
-            print("Error =>", err)
-            return False
-
     def update_info(self, emp_id, name, address, email, dob, gender, phone):
         try:
             print(emp_id)
@@ -148,4 +134,14 @@ class Employee:
             return False
 
     def get_performance(self):
-        pass
+        try:
+            sql = "SELECT  employees.emp_id,emp_name, \
+            performance.result, performance.attitude, performance.project_completed,\
+            performance.attenance FROM employees\
+            LEFT JOIN performance ON employees.emp_id = performance.emp_id"
+            self.cur.execute(sql)
+            return self.cur
+
+        except Exception as err:
+            print("Error =>", err)
+            return None

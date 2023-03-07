@@ -28,10 +28,21 @@ SELECT COUNT(emp_id) FROM employees WHERE admin_id = '2';
 
 create table
     performance(
-        emp_id int(11) NOT NULL primary KEY AUTO_INCREMENT,
+        emp_id int(11) NOT NULL,
         Foreign Key (emp_id) REFERENCES employees(emp_id) ON DELETE CASCADE ON UPDATE CASCADE,
         result int,
         attitude int,
         project_completed int,
-        attenance int
+        attenance int,
+        performance_id int PRIMARY key AUTO_INCREMENT
     );
+
+SELECT
+    employees.emp_id,
+    emp_name,
+    performance.result,
+    performance.attitude,
+    performance.project_completed,
+    performance.attenance
+FROM employees
+    LEFT JOIN performance ON employees.emp_id = performance.emp_id;

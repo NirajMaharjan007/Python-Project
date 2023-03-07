@@ -1,10 +1,9 @@
 from PyQt6.QtWidgets import *
-from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from data.database import Employee, get_login
+from panels.tables import *
 from sys import exit
 import frame
-import panels.dialogs as dialog
 
 
 class Container(QVBoxLayout):
@@ -18,6 +17,7 @@ class Container(QVBoxLayout):
         tab = QTabWidget()
 
         employee_frame = EmployeeFrame()
+        employee_perform = EmployeePerformance()
         inside_frame = QFrame()
 
         self.setContentsMargins(8, 4, 8, 4)
@@ -53,7 +53,7 @@ class Container(QVBoxLayout):
         # self.addWidget(employee_frame)
 
         tab.addTab(inside_frame, "Main Tab")
-        tab.addTab(EmployeePerformance(), "Performance")
+        tab.addTab(employee_perform, "Performance")
         tab.adjustSize()
         tab.show()
 
@@ -69,12 +69,29 @@ class EmployeePerformance(QFrame):
         self.setFrameShadow(QFrame.Shadow.Sunken)
 
         vlay = QVBoxLayout()
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        table_vlay = QVBoxLayout()
+        table_perform = PerformanceTable()
+        table_frame = QFrame()
 
         header = QLabel("Details of Employee Performance")
-        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
-                            Qt.AlignmentFlag.AlignTop)
+        header.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                            Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
+
+        header2 = QLabel("Table of Employee Performance")
+        header2.setObjectName("header2_underline")
+        header2.setAlignment(Qt.AlignmentFlag.AlignBottom)
+
+        table_vlay.addWidget(header2)
+        table_vlay.addWidget(table_perform)
+
+        table_frame.setLayout(table_vlay)
+
         vlay.addWidget(header)
+        vlay.addWidget(table_frame)
 
         self.setLayout(vlay)
 
@@ -178,101 +195,3 @@ class LoginFormLayout(QFormLayout):
                 exit(0)
             else:
                 print("Well Done!\nGood Job!")
-
-
-class TableDisplay(QTableWidget):
-
-    def __init__(self):
-        super().__init__()
-
-        employee = Employee()
-
-        dialog.EmployeeDialog.set_tableWidget(self)
-
-        header_labels = ["emp_id", "Emp_name", "address", "email",
-                         "dob", "gender", "phone_no", ""]
-
-        self.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows)
-        self.setSizePolicy(QSizePolicy.Policy.Preferred,
-                           QSizePolicy.Policy.Preferred)
-
-        self.setRowCount(employee.count)
-        self.setColumnCount(8)
-        self.setHorizontalHeaderLabels(header_labels)
-        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-
-        self.data = employee.get_employee_detail()
-
-        if self.data is not None:
-            for row_index, row_data in enumerate(self.data):
-                for column_index, column_data in enumerate(row_data):
-                    if column_index == 0:
-                        cell_widget = self.__CellWidget(self, column_data)
-                        cell_widget.delete.setProperty("row", column_index)
-                        self.setCellWidget(row_index, 7, cell_widget)
-
-                    item = QTableWidgetItem(str(column_data))
-                    self.setItem(row_index, column_index, item)
-
-        self.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeMode.Stretch)
-
-        self.adjustSize()
-        self.update()
-
-    def get_widget(self, table: QTableWidget, data):
-        return self.__CellWidget(table, data)
-
-    class __CellWidget(QWidget):
-        emp_id: int
-        update: QPushButton
-        delete: QPushButton
-
-        def set_empId(self, emp_id=int):
-            self.emp_id = emp_id
-
-        # def __init__(self, table=QTableWidget):
-        def __init__(self, table=QTableWidget, emp_id=int):
-            self.employee = Employee()
-            self.emp_id = emp_id
-            self.table = table
-
-            super().__init__()
-
-            cell_layout = QHBoxLayout()
-            self.update = QPushButton("Edit")
-            self.update.setObjectName("update")
-            self.update.clicked.connect(self.__edit)
-
-            self.delete = QPushButton("Delete")
-            self.delete.setObjectName("delete")
-            self.delete.clicked.connect(self.__delete)
-
-            cell_layout.addWidget(self.update)
-            cell_layout.addWidget(self.delete)
-            cell_layout.setContentsMargins(2, 4, 2, 4)
-
-            self.setLayout(cell_layout)
-
-        def __delete(self):
-            msg = QMessageBox()
-
-            result = QMessageBox.critical(
-                msg, "Delete", "Are you sure you want to", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-
-            if result == QMessageBox.StandardButton.Yes:
-                if self.employee.delete(self.emp_id):
-                    # Get the row index of the button that was clicked
-                    button = self.sender()
-                    row = button.property("row")
-
-                    # Remove the row from the table
-                    self.table.removeRow(row)
-                    msg.information(
-                        msg, "Delete", "data deleted", msg.StandardButton.Close)
-                    print("Deleted")
-
-        def __edit(self):
-            emp_dialog = dialog.EditEmployeeDialog(self.emp_id)
-            emp_dialog.exec()

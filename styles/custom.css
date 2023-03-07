@@ -99,20 +99,20 @@ QAction::item:selected {
   border-color: #dc3545;
 }
 
-#refresh {
+#info {
   color: #fff;
   background-color: #17a2b8;
   border-color: #17a2b8;
 }
 
-#refresh:hover {
+#info:hover {
   color: #fff;
   background-color: #138496;
   border-color: #117a8b;
 }
 
-#refresh.disabled,
-#refresh:disabled {
+#info.disabled,
+#info:disabled {
   color: #fff;
   background-color: #17a2b8;
   border-color: #17a2b8;
