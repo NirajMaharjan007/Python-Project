@@ -124,6 +124,13 @@ class PerformanceTable(QTableWidget):
                 for column_index, column_data in enumerate(row_data):
                     if column_index == 0:
                         cell_widget = self.__ButtonWidget(self, column_data)
+
+                    if column_index >= 2:
+                        if column_data == None:
+                            cell_widget.set_add_btn()
+                        else:
+                            cell_widget.set_update_btn()
+
                         self.setCellWidget(row_index, 6, cell_widget)
 
                     item = QTableWidgetItem(str(column_data))
@@ -144,8 +151,8 @@ class PerformanceTable(QTableWidget):
             self.table = table
             self.emp_id = emp_id
 
-            hlay = QHBoxLayout()
-            hlay.setContentsMargins(4, 2, 4, 2)
+            self.hlay = QHBoxLayout()
+            self.hlay.setContentsMargins(4, 2, 4, 2)
 
             self.add_btn = QPushButton("Add")
             self.add_btn.setObjectName("info")
@@ -155,8 +162,12 @@ class PerformanceTable(QTableWidget):
             self.update_btn.setObjectName("update")
             self.update_btn.clicked.connect(lambda: print(emp_id))
 
-            # hlay.addWidget(self.add_btn)
+        def set_update_btn(self):
+            self.hlay.addWidget(self.update_btn)
 
-            hlay.addWidget(self.update_btn)
+            self.setLayout(self.hlay)
 
-            self.setLayout(hlay)
+        def set_add_btn(self):
+            self.hlay.addWidget(self.add_btn)
+
+            self.setLayout(self.hlay)
