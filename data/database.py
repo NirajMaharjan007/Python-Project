@@ -148,19 +148,23 @@ class Employee:
             print("Error =>", err)
             return None
 
-    def get_performance_count(self, emp_id: int):
+    def get_performance_count(self, emp_id):
+        '''
+        TODO => Retry the work
+        '''
+
         try:
-            sql = f"SELECT count(*) FROM employees\
+            admin_id = get_adminId()
+
+            sql = "SELECT count(*) FROM employees\
                 Right JOIN performance \
                 ON employees.emp_id = performance.emp_id\
-                Where employees.emp_id = {emp_id}"
+                Where employees.emp_id = " + str(emp_id) \
+                + " and admin_id = " + str(admin_id)
 
             res = self.cur.execute(sql)
 
-            if res is not None:
-                return res
-            else:
-                raise Exception("Can not do the operation")
+            return res
 
         except Exception as err:
             print("Error =>", err)
