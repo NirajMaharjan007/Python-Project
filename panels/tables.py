@@ -102,13 +102,22 @@ class TableDisplay(QTableWidget):
 
 class PerformanceTable(QTableWidget):
     emp_id: int
+    refresh: QPushButton
+
+    def get_refresh_btn(self) -> QPushButton:
+        self.refresh.setObjectName("refresh")
+        self.refresh.setFixedSize(75, 30)
+        self.refresh.clicked.connect(self.__update_table)
+        return self.refresh
 
     def __init__(self):
         super().__init__()
         self.employee = Employee()
 
+        PerformanceTable.refresh = QPushButton("Refresh")
+
         header_labels = ["emp_id", "Emp_name", "result", "attitude",
-                         "project_completed", "attenance", ""]
+                         "project_completed", "present_days", "absent_days", ""]
 
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
@@ -116,8 +125,11 @@ class PerformanceTable(QTableWidget):
                            QSizePolicy.Policy.Expanding)
 
         self.setRowCount(self.employee.count)
-        self.setColumnCount(7)
+        self.setColumnCount(8)
         self.setHorizontalHeaderLabels(header_labels)
+
+        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
         data = self.employee.get_performance()
 
@@ -134,15 +146,40 @@ class PerformanceTable(QTableWidget):
                         else:
                             cell_widget.set_update_btn()
 
-                        self.setCellWidget(row_index, 6, cell_widget)
+                        self.setCellWidget(row_index, 7, cell_widget)
 
                     item = QTableWidgetItem(str(column_data))
                     self.setItem(row_index, column_index, item)
 
-        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-
         self.adjustSize()
+
+    def __update_table(self):
+        self.clearContents()
+        self.update()
+        self.setRowCount(0)
+
+        data = Employee().get_performance()
+
+        if data is not None:
+            num_rows = len(data)
+            self.setRowCount(num_rows)
+            for row_index, row_data in enumerate(data):
+                for column_index, column_data in enumerate(row_data):
+                    if column_index == 0:
+                        cell_widget = self.__ButtonWidget(self, column_data)
+
+                    if column_index >= 2:
+                        if column_data == None:
+                            cell_widget.set_add_btn()
+                        else:
+                            cell_widget.set_update_btn()
+
+                        self.setCellWidget(row_index, 7, cell_widget)
+
+                    item = QTableWidgetItem(str(column_data))
+                    self.setItem(row_index, column_index, item)
+
+        print("update table")
 
     class __ButtonWidget(QWidget):
         emp_id: int

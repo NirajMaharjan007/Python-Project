@@ -297,3 +297,32 @@ class EditEmployeeDialog(QDialog):
             print("Error =>", e)
             message_box.critical(message_box, 'Error',
                                  str(e), QMessageBox.StandardButton.Close)
+
+
+class AddPerform(QDialog):
+    def __init__(self, emp_id=int):
+        self.emp_id = emp_id
+
+        super().__init__()
+
+        self.setWindowFlags(self.windowFlags() |
+                            Qt.WindowType.WindowStaysOnTopHint)
+
+        with open("./styles/styles.css") as f:
+            style = f.read()
+            self.setStyleSheet(style)
+
+        self.setWindowTitle("Add Performer")
+
+        form = QFormLayout()
+
+        self.res = QLineEdit()
+        self.attitude = QLineEdit()
+        self.project = QLineEdit()
+        self.present = QLineEdit()
+        self.absent = QLineEdit()
+
+        form.addRow("Set Result", self.res)
+        form.addRow("Set Attitude", self.attitude)
+        form.addRow("Set Finish Project", self.project)
+        form.addRow("Set Present day", self.attitude)

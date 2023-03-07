@@ -90,6 +90,7 @@ class EmployeePerformance(QFrame):
         header2.setAlignment(Qt.AlignmentFlag.AlignBottom)
 
         hlay.addWidget(header2)
+        hlay.addWidget(table_perform.get_refresh_btn())
 
         table_vlay.addLayout(hlay)
         table_vlay.addWidget(table_perform)
