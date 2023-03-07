@@ -245,15 +245,15 @@ class EditEmployeeDialog(QDialog):
         self.phone = QLineEdit()
         self.phone.setObjectName("form-control")
 
-        update_btn = QPushButton("Update")
-        update_btn.setObjectName("login")
-        update_btn.clicked.connect(self.__update)
+        self.update_btn = QPushButton("Update")
+        self.update_btn.setObjectName("login")
+        self.update_btn.clicked.connect(self.__update)
 
         cancel = QPushButton("Cancel")
         cancel.setObjectName("cancel")
         cancel.clicked.connect(lambda: self.close())
 
-        hlayout.addWidget(update_btn)
+        hlayout.addWidget(self.update_btn)
         hlayout.addWidget(cancel)
 
         form.addRow("Employee's name", self.name)
@@ -288,6 +288,7 @@ class EditEmployeeDialog(QDialog):
                 status = "Successfully updated employee details\nRequired to Logout from session"
                 message_box.information(message_box, 'Success', status,
                                         QMessageBox.StandardButton.Close)
+
             else:
                 status = "Failed, updated employee details"
                 message_box.critical(message_box, 'Failed', status,
@@ -315,14 +316,35 @@ class AddPerform(QDialog):
         self.setWindowTitle("Add Performer")
 
         form = QFormLayout()
+        form.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
 
         self.res = QLineEdit()
+        self.res.setObjectName("form-control")
+
         self.attitude = QLineEdit()
+        self.attitude.setObjectName("form-control")
+
         self.project = QLineEdit()
-        self.present = QLineEdit()
-        self.absent = QLineEdit()
+        self.project.setObjectName("form-control")
+
+        self.present = QPushButton()
+        self.present.setObjectName("info")
+
+        self.absent = QPushButton()
+        self.absent.setObjectName("info")
+
+        hlayout = QHBoxLayout()
+        hlayout.addWidget(self.present)
+        hlayout.addWidget(self.absent)
 
         form.addRow("Set Result", self.res)
         form.addRow("Set Attitude", self.attitude)
         form.addRow("Set Finish Project", self.project)
-        form.addRow("Set Present day", self.attitude)
+        form.addRow("Set Attendence", hlayout)
+
+    def __add(self):
+        pass
+
+    def __cancel(self):
+        pass

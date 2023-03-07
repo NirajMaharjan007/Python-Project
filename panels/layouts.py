@@ -121,7 +121,13 @@ class EmployeeFrame(QFrame):
         header = QLabel("Employees Details")
         header.setObjectName("header2_underline")
 
+        refresh = QPushButton("Refresh")
+        refresh.setObjectName("refresh")
+        refresh.setFixedSize(75, 30)
+        refresh.clicked.connect(self.table.get_update_function)
+
         blayout.addWidget(header)
+        blayout.addWidget(refresh)
 
         vlay.addLayout(blayout)
 

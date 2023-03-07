@@ -6,6 +6,27 @@ from data.database import Employee
 class TableDisplay(QTableWidget):
     table_performace: QTableWidget
 
+    def get_update_function(self):
+        print("get_update_function")
+        self.clearContents()
+        self.setRowCount(0)
+        self.update()
+
+        data = Employee().get_employee_detail()
+
+        if data is not None:
+            num_rows = len(data)
+            self.setRowCount(num_rows)
+            for row_index, row_data in enumerate(data):
+                for column_index, column_data in enumerate(row_data):
+                    if column_index == 0:
+                        cell_widget = self.__CellWidget(self, column_data)
+                        cell_widget.delete.setProperty("row", column_index)
+                        self.setCellWidget(row_index, 7, cell_widget)
+
+                    item = QTableWidgetItem(str(column_data))
+                    self.setItem(row_index, column_index, item)
+
     def __init__(self):
         super().__init__()
 
