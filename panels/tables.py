@@ -82,6 +82,7 @@ class TableDisplay(QTableWidget):
             result = QMessageBox.critical(
                 msg, "Delete", "Are you sure you want to", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
+            PerformanceTable.delete_row(True)
             if result == QMessageBox.StandardButton.Yes:
                 if self.employee.delete(self.emp_id):
                     # Get the row index of the button that was clicked
@@ -101,12 +102,19 @@ class TableDisplay(QTableWidget):
 
 class PerformanceTable(QTableWidget):
     emp_id: int
+    refresh: QPushButton
+
+    def get_btn(self) -> QPushButton:
+        return self.refresh
 
     def __init__(self):
         super().__init__()
+        employee = Employee()
+
+        PerformanceTable.refresh = QPushButton("Refresh")
+
         header_labels = ["emp_id", "Emp_name", "result", "attitude",
                          "project_completed", "attenance", ""]
-        employee = Employee()
 
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
