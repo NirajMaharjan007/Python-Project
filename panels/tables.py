@@ -127,6 +127,7 @@ class PerformanceTable(QTableWidget):
 
     def get_refresh_btn(self) -> QPushButton:
         self.refresh.setObjectName("refresh")
+        self.refresh.setContentsMargins(0, 0, 0, 0)
         self.refresh.setFixedSize(75, 30)
         self.refresh.clicked.connect(self.__update_table)
         return self.refresh
@@ -203,7 +204,6 @@ class PerformanceTable(QTableWidget):
         print("update table")
 
     class __ButtonWidget(QWidget):
-        emp_id: int
         table: QTableWidget
         update_btn: QPushButton
         add_btn: QPushButton
@@ -219,9 +219,10 @@ class PerformanceTable(QTableWidget):
             self.hlay = QHBoxLayout()
             self.hlay.setContentsMargins(4, 2, 4, 2)
 
+            add_performance = dialog.AddPerform(emp_id)
             self.add_btn = QPushButton("Add")
             self.add_btn.setObjectName("info")
-            self.add_btn.clicked.connect(lambda: print(emp_id))
+            self.add_btn.clicked.connect(lambda: add_performance.exec())
 
             self.update_btn = QPushButton("Update")
             self.update_btn.setObjectName("update")
@@ -234,5 +235,4 @@ class PerformanceTable(QTableWidget):
 
         def set_add_btn(self):
             self.hlay.addWidget(self.add_btn)
-
             self.setLayout(self.hlay)

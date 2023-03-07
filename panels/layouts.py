@@ -40,13 +40,6 @@ class Container(QVBoxLayout):
         inside_frame.setFrameShadow(QFrame.Shadow.Raised)
         inside_frame.setLayout(hlayout)
 
-        label = QLabel("Employee Summary")
-        label.setObjectName("header2_underline")
-        employee_frame.table.update()
-
-        vlayout.addWidget(label)
-        vlayout.addWidget(QLabel("Employees count: " +
-                          str(Employee().get_count())))
         vlayout.addWidget(employee_frame)
 
         # self.addWidget(inside_frame)
@@ -65,25 +58,30 @@ class EmployeePerformance(QFrame):
 
     def __init__(self):
         super().__init__()
-        self.setFrameShape(QFrame.Shape.Box)
-        self.setFrameShadow(QFrame.Shadow.Sunken)
+        self.setFrameShape(QFrame.Shape.WinPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
 
         vlay = QVBoxLayout()
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignTop)
 
         hlay = QHBoxLayout()
-        hlay.setAlignment(Qt.AlignmentFlag.AlignCenter |
+        hlay.setAlignment(Qt.AlignmentFlag.AlignLeft |
                           Qt.AlignmentFlag.AlignTop)
 
         table_vlay = QVBoxLayout()
         table_perform = PerformanceTable()
-        table_frame = QFrame()
 
+        table_frame = QFrame()
+        table_frame.setFrameShape(QFrame.Shape.Box)
+        table_frame.setFrameShadow(QFrame.Shadow.Raised)
+
+        header_layout = QVBoxLayout()
         header = QLabel("Details of Employee Performance")
-        header.setAlignment(Qt.AlignmentFlag.AlignCenter |
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
                             Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
+        header_layout.addWidget(header)
 
         header2 = QLabel("Table of Employee Performance")
         header2.setObjectName("header2_underline")
@@ -97,7 +95,7 @@ class EmployeePerformance(QFrame):
 
         table_frame.setLayout(table_vlay)
 
-        vlay.addWidget(header)
+        vlay.addLayout(header_layout)
         vlay.addWidget(table_frame)
 
         self.setLayout(vlay)

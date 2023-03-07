@@ -1,7 +1,7 @@
 from random import randint
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QFile
 from data.database import Employee
 from datetime import datetime
 
@@ -309,11 +309,27 @@ class AddPerform(QDialog):
         self.setWindowFlags(self.windowFlags() |
                             Qt.WindowType.WindowStaysOnTopHint)
 
-        with open("./styles/styles.css") as f:
-            style = f.read()
-            self.setStyleSheet(style)
-
         self.setWindowTitle("Add Performer")
+
+        with open("./styles/styles.css") as file:
+            stylesheet = file.read()
+            self.setStyleSheet(stylesheet)
+
+        header = QLabel("Emp_Id:" + str(emp_id))
+        with open("./styles/custom.css") as file:
+            stylesheet = file.read()
+            header.setStyleSheet(stylesheet)
+
+        header.setObjectName("header2")
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
+
+        vlay = QVBoxLayout()
+
+        vlay.addWidget(header)
+
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
 
         form = QFormLayout()
         form.setAlignment(Qt.AlignmentFlag.AlignVCenter |
@@ -328,22 +344,32 @@ class AddPerform(QDialog):
         self.project = QLineEdit()
         self.project.setObjectName("form-control")
 
-        self.present = QPushButton()
-        self.present.setObjectName("info")
-
-        self.absent = QPushButton()
-        self.absent.setObjectName("info")
+        self.present = QRadioButton("present")
+        self.absent = QRadioButton("absent")
+        self.present.toggled.connect(self.__set_attendance)
+        self.absent.toggled.connect(self.__set_attendance)
 
         hlayout = QHBoxLayout()
+        hlayout.addWidget(QLabel("Set Attendence:"))
         hlayout.addWidget(self.present)
         hlayout.addWidget(self.absent)
 
-        form.addRow("Set Result", self.res)
-        form.addRow("Set Attitude", self.attitude)
-        form.addRow("Set Finish Project", self.project)
-        form.addRow("Set Attendence", hlayout)
+        form.addRow("Set Result: ", self.res)
+        form.addRow("Set Attitude: ", self.attitude)
+        form.addRow("Set Finish Project: ", self.project)
+        form.addRow(hlayout)
 
-    def __add(self):
+        vlay.addLayout(form)
+
+        self.setLayout(vlay)
+        self.setFixedSize(350, 200)
+
+    def __set_attendance(self):
+        sender = self.sender()
+        if sender.isChecked():
+            self.attend = sender.text()
+
+    def __add_data(self):
         pass
 
     def __cancel(self):
