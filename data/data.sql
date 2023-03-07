@@ -46,3 +46,10 @@ SELECT
     performance.attenance
 FROM employees
     LEFT JOIN performance ON employees.emp_id = performance.emp_id;
+
+INSERT INTO performance VALUES(280,1,1,1,15);
+
+SELECT count(*)
+FROM employees
+    Right JOIN performance ON employees.emp_id = performance.emp_id
+Where employees.emp_id = 280;
