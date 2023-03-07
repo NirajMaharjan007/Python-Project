@@ -82,7 +82,6 @@ class TableDisplay(QTableWidget):
             result = QMessageBox.critical(
                 msg, "Delete", "Are you sure you want to", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
-            PerformanceTable.delete_row(True)
             if result == QMessageBox.StandardButton.Yes:
                 if self.employee.delete(self.emp_id):
                     # Get the row index of the button that was clicked
