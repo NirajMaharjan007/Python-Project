@@ -97,7 +97,8 @@ class Employee:
             admin_id = get_adminId()
             query = f"SELECT emp_id,emp_name,address,email,dob,gender,phone_no FROM employees where admin_id = {admin_id}"
             self.cur.execute(query)
-            return self.cur
+            result = self.cur.fetchall()
+            return result
 
         except Exception as err:
             print("Error =>", err)
