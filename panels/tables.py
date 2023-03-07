@@ -4,6 +4,7 @@ from data.database import Employee
 
 
 class TableDisplay(QTableWidget):
+    table_performace: QTableWidget
 
     def __init__(self):
         super().__init__()
@@ -101,19 +102,10 @@ class TableDisplay(QTableWidget):
 
 class PerformanceTable(QTableWidget):
     emp_id: int
-    refresh: QPushButton
-
-    def get_btn(self) -> QPushButton:
-        self.refresh.setFixedSize(75, 30)
-        self.refresh.setObjectName("info")
-        self.refresh.clicked.connect(self.__updated)
-        return self.refresh
 
     def __init__(self):
         super().__init__()
         self.employee = Employee()
-
-        PerformanceTable.refresh = QPushButton("Refresh")
 
         header_labels = ["emp_id", "Emp_name", "result", "attitude",
                          "project_completed", "attenance", ""]
@@ -152,13 +144,9 @@ class PerformanceTable(QTableWidget):
 
         self.adjustSize()
 
-    def __updated(self):
-        emp_id = self.cell_widget.get_empId()
-        count = self.employee.get_performance_count(emp_id)
-        print(count, "\n", emp_id)
-
     class __ButtonWidget(QWidget):
         emp_id: int
+        table: QTableWidget
         update_btn: QPushButton
         add_btn: QPushButton
 
