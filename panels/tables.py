@@ -139,7 +139,7 @@ class PerformanceTable(QTableWidget):
         PerformanceTable.refresh = QPushButton("Refresh")
 
         header_labels = ["emp_id", "Emp_name", "result", "attitude",
-                         "project_completed", "present_days", "absent_days", ""]
+                         "project_completed", ""]
 
         self.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows)
@@ -147,7 +147,7 @@ class PerformanceTable(QTableWidget):
                            QSizePolicy.Policy.Expanding)
 
         self.setRowCount(self.employee.count)
-        self.setColumnCount(8)
+        self.setColumnCount(6)
         self.setHorizontalHeaderLabels(header_labels)
 
         self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
@@ -168,7 +168,7 @@ class PerformanceTable(QTableWidget):
                         else:
                             cell_widget.set_update_btn()
 
-                        self.setCellWidget(row_index, 7, cell_widget)
+                        self.setCellWidget(row_index, 5, cell_widget)
 
                     item = QTableWidgetItem(str(column_data))
                     self.setItem(row_index, column_index, item)
@@ -196,7 +196,7 @@ class PerformanceTable(QTableWidget):
                         else:
                             cell_widget.set_update_btn()
 
-                        self.setCellWidget(row_index, 7, cell_widget)
+                        self.setCellWidget(row_index, 5, cell_widget)
 
                     item = QTableWidgetItem(str(column_data))
                     self.setItem(row_index, column_index, item)
