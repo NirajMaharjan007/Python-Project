@@ -8,29 +8,6 @@ from datetime import datetime
 import panels.layouts as lay
 
 
-class Dialog(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setWindowFlags(self.windowFlags() |
-                            Qt.WindowType.WindowStaysOnTopHint)
-
-        with open("./styles/custom.css") as f:
-            style = f.read()
-            self.setStyleSheet(style)
-
-        label = QLabel('This is a dialog box!', self)
-
-        button = QPushButton('Close', self)
-        button.clicked.connect(self.close)
-
-        layout = QVBoxLayout()
-
-        layout.addWidget(label)
-        layout.addWidget(button)
-
-        self.setLayout(layout)
-
-
 class AboutDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -89,6 +66,7 @@ class EmployeeDialog(QDialog):
 
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon("./resources/icon.png"))
 
         self.emp = Employee()
 

@@ -39,7 +39,6 @@ class Menu:
         self.fr = LoginActivity.f
         self.login_frame = Login.f
 
-        dialog = Dialog()
         about_dialog = AboutDialog()
         admin_dialog = AdminDialog()
         emp_dialog = EmployeeDialog()
@@ -52,9 +51,6 @@ class Menu:
 
         about_us = QAction("About us", self.fr)
         about_us.triggered.connect(lambda: about_dialog.exec())
-
-        var = QAction("Varaibles", self.fr)
-        var.triggered.connect(lambda: dialog.exec())
 
         admin_info = QAction("Admin info", self.fr)
         admin_info.triggered.connect(lambda: admin_dialog.exec())
@@ -69,6 +65,5 @@ class Menu:
         admin_bar.addAction(emp_set)
         admin_bar.addAction(admin_info)
 
-        option_bar.addAction(var)
         option_bar.addAction(about_us)
         option_bar.addAction(logout)

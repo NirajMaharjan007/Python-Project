@@ -1,7 +1,8 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
-from data.database import Employee, get_login
+from data.database import get_login
 from panels.tables import *
+import panels.dialogs as dialog
 from sys import exit
 import frame
 
@@ -105,6 +106,8 @@ class EmployeeFrame(QFrame):
     def __init__(self):
         super().__init__()
 
+        emp_dialog = dialog.EmployeeDialog()
+
         vlay = QVBoxLayout()
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignBottom)
@@ -119,6 +122,11 @@ class EmployeeFrame(QFrame):
         header = QLabel("Employees Details")
         header.setObjectName("header2_underline")
 
+        add_emp = QPushButton("Add Employee")
+        add_emp.setObjectName("info")
+        add_emp.setFixedSize(120, 30)
+        add_emp.clicked.connect(lambda: emp_dialog.exec())
+
         refresh = QPushButton("Refresh")
         refresh.setObjectName("refresh")
         refresh.setFixedSize(75, 30)
@@ -126,6 +134,7 @@ class EmployeeFrame(QFrame):
 
         blayout.addWidget(header)
         blayout.addWidget(refresh)
+        blayout.addWidget(add_emp)
 
         vlay.addLayout(blayout)
 
