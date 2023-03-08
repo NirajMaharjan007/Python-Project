@@ -151,28 +151,6 @@ class Employee:
             print("Error =>", err)
             return None
 
-    def get_performance_count(self, emp_id):
-        '''
-        TODO => Retry the work
-        '''
-
-        try:
-            admin_id = get_adminId()
-
-            sql = "SELECT count(*) FROM employees\
-                Right JOIN performance \
-                ON employees.emp_id = performance.emp_id\
-                Where employees.emp_id = " + str(emp_id) \
-                + " and admin_id = " + str(admin_id)
-
-            res = self.cur.execute(sql)
-
-            return res
-
-        except Exception as err:
-            print("Error =>", err)
-            return None
-
     def insert_performance(self, emp_id=int, result=int, attitude=int, project_completed=int):
         try:
             sql = f"INSERT INTO performance(emp_id,result,attitude,project_completed)\
@@ -184,3 +162,31 @@ class Employee:
         except Exception as err:
             print("Error =>", err)
             return False
+
+    def update_performance(self, emp_id=int, result=int, attitude=int, project_completed=int):
+        try:
+            sql = f"update performance set result = {result},\
+                project_completed = {project_completed}, attitude = {attitude}\
+                    where emp_id={emp_id}"
+            self.cur.execute(sql)
+            self.conn.commit()
+            return True
+        except Exception as err:
+            print("Error =>", err)
+            return False
+
+    def get_emp_name(self, id=int) -> str:
+        try:
+            sql = f"select emp_name from employees where emp_id={id}"
+            self.cur.execute(sql)
+            result = self.cur.fetchone()[0]
+
+            if result is not None:
+                return result
+
+            else:
+                raise Exception("Emp_name not found in employees table")
+
+        except Exception as err:
+            print("Error =>", err)
+            return None

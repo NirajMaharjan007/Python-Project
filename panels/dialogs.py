@@ -306,6 +306,7 @@ class AddPerform(QDialog):
         self.emp = Employee()
 
         self.emp_id = emp_id
+        self.emp_name = self.emp.get_emp_name(emp_id)
 
         self.setWindowFlags(self.windowFlags() |
                             Qt.WindowType.WindowStaysOnTopHint)
@@ -316,7 +317,7 @@ class AddPerform(QDialog):
             stylesheet = file.read()
             self.setStyleSheet(stylesheet)
 
-        header = QLabel("Emp_Id:" + str(emp_id))
+        header = QLabel("Emp_Name:" + str(self.emp_name))
         with open("./styles/custom.css") as file:
             stylesheet = file.read()
             header.setStyleSheet(stylesheet)
@@ -390,3 +391,97 @@ class AddPerform(QDialog):
         else:
             msg.information(
                 msg, "Failed", "Failed to insert data", msg.StandardButton.Close)
+
+
+class UpdatePerform(QDialog):
+    def __init__(self, emp_id=int):
+        super().__init__()
+        self.emp = Employee()
+
+        self.emp_name = self.emp.get_emp_name(emp_id)
+
+        self.emp_id = emp_id
+
+        self.setWindowFlags(self.windowFlags() |
+                            Qt.WindowType.WindowStaysOnTopHint)
+
+        self.setWindowTitle("Update Performer Data")
+
+        with open("./styles/styles.css") as file:
+            stylesheet = file.read()
+            self.setStyleSheet(stylesheet)
+
+        header = QLabel("Emp_Name:" + str(self.emp_name))
+        with open("./styles/custom.css") as file:
+            stylesheet = file.read()
+            header.setStyleSheet(stylesheet)
+
+        header.setObjectName("header2")
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
+
+        vlay = QVBoxLayout()
+        vlay.setContentsMargins(8, 0, 8, 0)
+        vlay.addWidget(header)
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        form = QFormLayout()
+        form.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                          Qt.AlignmentFlag.AlignTop)
+        form.setContentsMargins(0, 0, 0, 0)
+
+        self.res = QLineEdit()
+        self.res.setObjectName("form-control")
+
+        self.attitude = QLineEdit()
+        self.attitude.setObjectName("form-control")
+
+        self.project = QLineEdit()
+        self.project.setObjectName("form-control")
+
+        form.addRow("Set Result: ", self.res)
+        form.addRow("Set Attitude: ", self.attitude)
+        form.addRow("Set Finish Project: ", self.project)
+
+        hlay = QHBoxLayout()
+        hlay.setContentsMargins(2, 8, 2, 4)
+        hlay.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                          Qt.AlignmentFlag.AlignBottom)
+
+        add = QPushButton("Update")
+        add.setFixedSize(75, 30)
+        add.setObjectName("login")
+        add.clicked.connect(self.__add_data)
+
+        cancel = QPushButton("Cancel")
+        cancel.setFixedSize(75, 30)
+        cancel.setObjectName("cancel")
+        cancel.clicked.connect(lambda: self.close())
+
+        hlay.addWidget(add)
+        hlay.addWidget(cancel)
+
+        vlay.addLayout(form)
+        vlay.addLayout(hlay)
+
+        self.setLayout(vlay)
+        self.setFixedSize(350, 200)
+
+    def __add_data(self):
+        msg = QMessageBox()
+        msg.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
+
+        res = self.res.text()
+        attitude = self.attitude.text()
+        project = self.project.text()
+
+        data = self.emp.update_performance(self.emp_id, res, attitude, project)
+
+        if data:
+            msg.information(
+                msg, "Success", "Data Update. \nRequired to hit refresh", msg.StandardButton.Close)
+
+        else:
+            msg.information(
+                msg, "Failed", "Failed to Update data", msg.StandardButton.Close)

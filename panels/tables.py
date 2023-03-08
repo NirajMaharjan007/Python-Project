@@ -224,9 +224,10 @@ class PerformanceTable(QTableWidget):
             self.add_btn.setObjectName("info")
             self.add_btn.clicked.connect(lambda: add_performance.exec())
 
+            update_performance = dialog.UpdatePerform(emp_id)
             self.update_btn = QPushButton("Update")
             self.update_btn.setObjectName("update")
-            self.update_btn.clicked.connect(lambda: print(emp_id))
+            self.update_btn.clicked.connect(lambda: update_performance.exec())
 
         def set_update_btn(self):
             self.hlay.addWidget(self.update_btn)
