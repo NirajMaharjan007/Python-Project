@@ -31,10 +31,12 @@ class LoginActivity:
         self.f.setLayout(container)
 
 
-class Menu:
+class Menu(QMenuBar):
     layout: QBoxLayout
 
     def __init__(self, layout: QBoxLayout):
+        super().__init__()
+
         self.layout = Menu.layout = layout
         self.fr = LoginActivity.f
         self.login_frame = Login.f
@@ -43,11 +45,10 @@ class Menu:
         admin_dialog = AdminDialog()
         emp_dialog = EmployeeDialog()
 
-        menubar = QMenuBar()
-        self.layout.setMenuBar(menubar)
+        self.layout.setMenuBar(self)
 
-        admin_bar = menubar.addMenu('Admin')
-        option_bar = menubar.addMenu('Option')
+        admin_bar = self.addMenu('Admin')
+        option_bar = self.addMenu('Option')
 
         about_us = QAction("About us", self.fr)
         about_us.triggered.connect(lambda: about_dialog.exec())
