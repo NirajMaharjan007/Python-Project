@@ -138,8 +138,8 @@ class Employee:
         try:
             admin_id = get_adminId()
             sql = "SELECT employees.emp_id, emp_name,performance.result,\
-                performance.attitude, performance.project_completed, performance.present,\
-                performance.absent FROM employees LEFT JOIN\
+                performance.attitude, performance.project_completed \
+                FROM employees LEFT JOIN \
                 performance ON employees.emp_id = performance.emp_id\
                 where admin_id = " + str(admin_id)
 
@@ -172,3 +172,15 @@ class Employee:
         except Exception as err:
             print("Error =>", err)
             return None
+
+    def insert_performance(self, emp_id=int, result=int, attitude=int, project_completed=int):
+        try:
+            sql = f"INSERT INTO performance(emp_id,result,attitude,project_completed)\
+                values ({emp_id},{result} ,{attitude}, {project_completed})"
+
+            self.cur.execute(sql)
+            self.conn.commit()
+            return True
+        except Exception as err:
+            print("Error =>", err)
+            return False
