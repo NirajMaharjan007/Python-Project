@@ -1,4 +1,4 @@
--- Active: 1657020369972@@127.0.0.1@3306@my_database
+-- Active: 1678041032923@@127.0.0.1@3306@my_database
 
 CREATE DATABASE IF NOT EXISTS my_database;
 
@@ -51,3 +51,13 @@ SELECT count(*)
 FROM employees
     Right JOIN performance ON employees.emp_id = performance.emp_id
 Where employees.emp_id = 280;
+
+CREATE Table
+    job_details (
+        emp_id int(11) NOT NULL,
+        Foreign Key (emp_id) REFERENCES employees(emp_id) on delete cascade on update cascade,
+        job_id int PRIMARY key not NULL auto_increment,
+        salary int(11),
+        hire_date DATE,
+        department_name varchar(255)
+    );
