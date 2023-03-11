@@ -19,6 +19,7 @@ class Container(QVBoxLayout):
 
         employee_frame = EmployeeFrame()
         employee_perform = EmployeePerformance()
+        employee_chart = EmployeeChart()
         inside_frame = QFrame()
 
         self.setContentsMargins(8, 4, 8, 4)
@@ -48,6 +49,7 @@ class Container(QVBoxLayout):
 
         tab.addTab(inside_frame, "Main Tab")
         tab.addTab(employee_perform, "Performance")
+        tab.addTab(employee_chart, "Employee Chart")
         tab.adjustSize()
         tab.show()
 
@@ -215,3 +217,41 @@ class LoginFormLayout(QFormLayout):
                 exit(0)
             else:
                 print("Well Done!\nGood Job!")
+
+
+class EmployeeChart(QFrame):
+    def __init__(self):
+        super().__init__()
+        self.setFrameShape(QFrame.Shape.WinPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
+
+        inner_frame = QFrame()
+        inner_frame.setFrameShape(QFrame.Shape.Box)
+        inner_frame.setFrameShadow(QFrame.Shadow.Sunken)
+
+        inner_frame_layout = QVBoxLayout()
+        inner_frame_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        inner_frame_layout.setContentsMargins(0, 0, 0, 0)
+
+        label = QLabel("Hello, world!")
+        label.setAlignment(Qt.AlignmentFlag.AlignTop |
+                           Qt.AlignmentFlag.AlignHCenter)
+        label.setObjectName("header2_underline")
+
+        inner_frame_layout.addWidget(label)
+
+        vlay = QVBoxLayout()
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        header = QLabel("Employee's Charts")
+        header.setObjectName("header")
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
+
+        inner_frame.setLayout(inner_frame_layout)
+
+        vlay.addWidget(header)
+        vlay.addWidget(inner_frame)
+
+        self.setLayout(vlay)
