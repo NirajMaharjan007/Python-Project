@@ -365,6 +365,7 @@ class AddPerform(QDialog):
         if data:
             msg.information(
                 msg, "Success", "Required to hit refresh", msg.StandardButton.Close)
+            self.close()
 
         else:
             msg.information(
