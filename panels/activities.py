@@ -1,6 +1,5 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt
 from data.database import get_adminId
 from panels.dialogs import *
 from panels.layouts import *
