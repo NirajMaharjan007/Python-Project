@@ -80,7 +80,7 @@ class EmployeePerformance(QFrame):
         table_frame.setFrameShadow(QFrame.Shadow.Raised)
 
         header_layout = QVBoxLayout()
-        header = QLabel("Details of Employee Performance")
+        header = QLabel("Stats of Employee Performance")
         header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
                             Qt.AlignmentFlag.AlignBottom)
         header.setObjectName("header")
@@ -225,33 +225,63 @@ class EmployeeChart(QFrame):
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
 
-        inner_frame = QFrame()
-        inner_frame.setFrameShape(QFrame.Shape.Box)
-        inner_frame.setFrameShadow(QFrame.Shadow.Sunken)
-
-        inner_frame_layout = QVBoxLayout()
-        inner_frame_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        inner_frame_layout.setContentsMargins(0, 0, 0, 0)
-
-        label = QLabel("Hello, world!")
+        label = QLabel("Detail Charts of Employees")
+        label.setObjectName("header2_underline")
         label.setAlignment(Qt.AlignmentFlag.AlignTop |
                            Qt.AlignmentFlag.AlignHCenter)
-        label.setObjectName("header2_underline")
 
-        inner_frame_layout.addWidget(label)
+        inner_frame = self.__Inner_Frame()
 
         vlay = QVBoxLayout()
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignTop)
+
+        hlay = QHBoxLayout()
+        hlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        hlay.addWidget(inner_frame)
+        hlay.addWidget(self.__Inner_Frame())
 
         header = QLabel("Employee's Charts")
         header.setObjectName("header")
         header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
                             Qt.AlignmentFlag.AlignTop)
 
-        inner_frame.setLayout(inner_frame_layout)
-
         vlay.addWidget(header)
-        vlay.addWidget(inner_frame)
+        vlay.addWidget(label)
+        vlay.addLayout(hlay)
 
         self.setLayout(vlay)
+
+    class __Inner_Frame(QFrame):
+        def __init__(self):
+            super().__init__()
+
+            self.setFrameShape(QFrame.Shape.WinPanel)
+            self.setFrameShadow(QFrame.Shadow.Raised)
+
+            hlayout = QHBoxLayout()
+            hlayout.setContentsMargins(0, 0, 0, 0)
+            hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                                 Qt.AlignmentFlag.AlignTop)
+            hlayout.addWidget(QLabel("Hello World"))
+
+            emp_frame = QFrame()
+            emp_frame.setFrameShape(QFrame.Shape.Panel)
+            emp_frame.setFrameShadow(QFrame.Shadow.Raised)
+            emp_frame.setLayout(hlayout)
+
+            layout = QVBoxLayout()
+            layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+            layout.setContentsMargins(0, 0, 0, 0)
+
+            label = QLabel("Name: ")
+            label.setAlignment(Qt.AlignmentFlag.AlignTop |
+                               Qt.AlignmentFlag.AlignHCenter)
+            label.setObjectName("header2_underline")
+
+            layout.addWidget(label)
+            layout.addWidget(emp_frame)
+
+            self.setLayout(layout)
