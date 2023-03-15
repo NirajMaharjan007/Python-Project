@@ -230,18 +230,31 @@ class EmployeeChart(QFrame):
         label.setAlignment(Qt.AlignmentFlag.AlignTop |
                            Qt.AlignmentFlag.AlignHCenter)
 
-        inner_frame = self.__Inner_Frame()
+        inner_frame = []
+
+        for i in range(6):
+            inner_frame.append(self.__Inner_Frame())
 
         vlay = QVBoxLayout()
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignTop)
 
-        hlay = QHBoxLayout()
-        hlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
-                          Qt.AlignmentFlag.AlignTop)
+        grid_lay = QGridLayout()
+        grid_lay.setColumnMinimumWidth(6, 10)
+        grid_lay.setContentsMargins(4, 2, 4, 2)
+        grid_lay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                              Qt.AlignmentFlag.AlignTop)
 
-        hlay.addWidget(inner_frame)
-        hlay.addWidget(self.__Inner_Frame())
+        row = 0
+        column = 0
+
+        for i in range(6):
+            if column == 3:
+                column = 0
+                row += 1
+
+            grid_lay.addWidget(inner_frame[i], row, column)
+            column += 1
 
         header = QLabel("Employee's Charts")
         header.setObjectName("header")
@@ -250,12 +263,14 @@ class EmployeeChart(QFrame):
 
         vlay.addWidget(header)
         vlay.addWidget(label)
-        vlay.addLayout(hlay)
+        vlay.addLayout(grid_lay)
 
         self.setLayout(vlay)
 
     class __Inner_Frame(QFrame):
         def __init__(self):
+            self.emp = Employee()
+
             super().__init__()
 
             self.setFrameShape(QFrame.Shape.WinPanel)
