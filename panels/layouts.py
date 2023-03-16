@@ -222,11 +222,11 @@ class LoginFormLayout(QFormLayout):
 class EmployeeChart(QFrame):
     refresh: QPushButton
 
-    def update_emp_frame(self):
-        pass
-
     def __init__(self):
+        inner_frame = self.__Inner_Frame()
+
         super().__init__()
+
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
 
@@ -234,61 +234,19 @@ class EmployeeChart(QFrame):
         vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
                           Qt.AlignmentFlag.AlignTop)
 
-        hlay = QHBoxLayout()
-        hlay.setAlignment(Qt.AlignmentFlag.AlignCenter |
-                          Qt.AlignmentFlag.AlignBaseline)
-
-        self.refresh = QPushButton("Refresh")
-        self.refresh.setObjectName("refresh")
-        self.refresh.setFixedSize(75, 30)
-        self.refresh.clicked.connect(self.update_emp_frame)
-
-        hlay.addWidget(self.refresh)
-
-        label = QLabel("Detail Charts of Employees")
-        label.setObjectName("header2_underline")
-        label.setAlignment(Qt.AlignmentFlag.AlignTop |
-                           Qt.AlignmentFlag.AlignHCenter)
-
-        header = QLabel("Employee's Charts")
+        header = QLabel("Employees' Charts")
+        header.setAlignment(Qt.AlignmentFlag.AlignTop |
+                            Qt.AlignmentFlag.AlignHCenter)
         header.setObjectName("header")
-        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
-                            Qt.AlignmentFlag.AlignTop)
-
-        emp = Employee()
-        count = emp.get_count()
-        inner_frame = []
-
-        for i in range(count):
-            inner_frame.append(self.__Inner_Frame())
-
-        grid_lay = QGridLayout()
-        grid_lay.setColumnMinimumWidth(6, 10)
-        grid_lay.setContentsMargins(4, 2, 4, 2)
-        grid_lay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
-                              Qt.AlignmentFlag.AlignTop)
-
-        row = 0
-        column = 0
-
-        for i in range(count):
-            if column == 3:
-                column = 0
-                row += 1
-
-            grid_lay.addWidget(inner_frame[i], row, column)
-            column += 1
 
         vlay.addWidget(header)
-        vlay.addWidget(label)
-        vlay.addLayout(hlay)
-        vlay.addLayout(grid_lay)
+        vlay.addWidget(inner_frame)
 
         self.setLayout(vlay)
 
     class __Inner_Frame(QFrame):
         def __init__(self):
-            self.emp = Employee()
+            emp = Employee()
 
             super().__init__()
 
@@ -301,21 +259,15 @@ class EmployeeChart(QFrame):
                                  Qt.AlignmentFlag.AlignTop)
             hlayout.addWidget(QLabel("Hello World"))
 
-            emp_frame = QFrame()
-            emp_frame.setFrameShape(QFrame.Shape.Panel)
-            emp_frame.setFrameShadow(QFrame.Shadow.Raised)
-            emp_frame.setLayout(hlayout)
-
             layout = QVBoxLayout()
             layout.setAlignment(Qt.AlignmentFlag.AlignTop)
             layout.setContentsMargins(0, 0, 0, 0)
 
-            label = QLabel("Name: ")
+            label = QLabel("Description")
             label.setAlignment(Qt.AlignmentFlag.AlignTop |
                                Qt.AlignmentFlag.AlignHCenter)
             label.setObjectName("header2_underline")
 
             layout.addWidget(label)
-            layout.addWidget(emp_frame)
 
             self.setLayout(layout)

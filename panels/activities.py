@@ -42,7 +42,6 @@ class Menu(QMenuBar):
 
         about_dialog = AboutDialog()
         admin_dialog = AdminDialog()
-        emp_dialog = EmployeeDialog()
 
         self.layout.setMenuBar(self)
 
@@ -55,14 +54,10 @@ class Menu(QMenuBar):
         admin_info = QAction("Admin info", self.fr)
         admin_info.triggered.connect(lambda: admin_dialog.exec())
 
-        emp_set = QAction("Add Employees", self.fr)
-        emp_set.triggered.connect(lambda: emp_dialog.exec())
-
         logout = QAction('Logout', self.fr)
         logout.triggered.connect(lambda: {self.fr.setVisible(False),
                                           self.login_frame.setVisible(True)})
 
-        admin_bar.addAction(emp_set)
         admin_bar.addAction(admin_info)
 
         option_bar.addAction(about_us)
