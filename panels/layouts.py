@@ -220,24 +220,47 @@ class LoginFormLayout(QFormLayout):
 
 
 class EmployeeChart(QFrame):
+    refresh: QPushButton
+
+    def update_emp_frame(self):
+        pass
+
     def __init__(self):
         super().__init__()
         self.setFrameShape(QFrame.Shape.WinPanel)
         self.setFrameShadow(QFrame.Shadow.Raised)
+
+        vlay = QVBoxLayout()
+        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
+                          Qt.AlignmentFlag.AlignTop)
+
+        hlay = QHBoxLayout()
+        hlay.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                          Qt.AlignmentFlag.AlignBaseline)
+
+        self.refresh = QPushButton("Refresh")
+        self.refresh.setObjectName("refresh")
+        self.refresh.setFixedSize(75, 30)
+        self.refresh.clicked.connect(self.update_emp_frame)
+
+        hlay.addWidget(self.refresh)
 
         label = QLabel("Detail Charts of Employees")
         label.setObjectName("header2_underline")
         label.setAlignment(Qt.AlignmentFlag.AlignTop |
                            Qt.AlignmentFlag.AlignHCenter)
 
+        header = QLabel("Employee's Charts")
+        header.setObjectName("header")
+        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                            Qt.AlignmentFlag.AlignTop)
+
+        emp = Employee()
+        count = emp.get_count()
         inner_frame = []
 
-        for i in range(6):
+        for i in range(count):
             inner_frame.append(self.__Inner_Frame())
-
-        vlay = QVBoxLayout()
-        vlay.setAlignment(Qt.AlignmentFlag.AlignVCenter |
-                          Qt.AlignmentFlag.AlignTop)
 
         grid_lay = QGridLayout()
         grid_lay.setColumnMinimumWidth(6, 10)
@@ -248,7 +271,7 @@ class EmployeeChart(QFrame):
         row = 0
         column = 0
 
-        for i in range(6):
+        for i in range(count):
             if column == 3:
                 column = 0
                 row += 1
@@ -256,13 +279,9 @@ class EmployeeChart(QFrame):
             grid_lay.addWidget(inner_frame[i], row, column)
             column += 1
 
-        header = QLabel("Employee's Charts")
-        header.setObjectName("header")
-        header.setAlignment(Qt.AlignmentFlag.AlignHCenter |
-                            Qt.AlignmentFlag.AlignTop)
-
         vlay.addWidget(header)
         vlay.addWidget(label)
+        vlay.addLayout(hlay)
         vlay.addLayout(grid_lay)
 
         self.setLayout(vlay)

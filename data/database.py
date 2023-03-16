@@ -69,7 +69,7 @@ class Employee:
         try:
             admin_id = get_adminId()
             self.cur.execute(
-                f"SELECT COUNT(*) FROM employees  WHERE admin_id = '{admin_id}'")
+                f"SELECT COUNT(*) FROM employees WHERE admin_id = '{admin_id}'")
             result = self.cur.fetchone()[0]
             if result is not None:
                 return result
@@ -190,5 +190,3 @@ class Employee:
         except Exception as err:
             print("Error =>", err)
             return None
-
-    
