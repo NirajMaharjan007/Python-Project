@@ -250,7 +250,7 @@ class EmployeeChart(QFrame):
 
             super().__init__()
 
-            self.setFrameShape(QFrame.Shape.WinPanel)
+            self.setFrameShape(QFrame.Shape.Box)
             self.setFrameShadow(QFrame.Shadow.Raised)
 
             hlayout = QHBoxLayout()
