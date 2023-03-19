@@ -10,6 +10,11 @@ app = QApplication(argv)
 
 
 class Frame(QWidget):
+    '''
+        ¯\︵(ツ︵/¯ ᴅᴏɴ·ᴛ ᴋɴᴏᴡ
+        
+        is this a main Frame
+    '''
     def __init__(self):
         super().__init__()
 
@@ -38,6 +43,10 @@ class Frame(QWidget):
 
 
 class FrameActivity(QWidget):
+    '''
+    ( ͡° ͜ʖ ͡°)
+     This may be After Login
+    '''
     def __init__(self):
         super().__init__()
 
@@ -46,6 +55,7 @@ class FrameActivity(QWidget):
         with open("./styles/custom.css") as f:
             style = f.read()
             self.setStyleSheet(style)
+
         LoginActivity(self)
 
         self.setGeometry(200, 200, 950, 500)
