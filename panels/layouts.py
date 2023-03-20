@@ -251,13 +251,7 @@ class EmployeeChart(QFrame):
             super().__init__()
 
             self.setFrameShape(QFrame.Shape.Box)
-            self.setFrameShadow(QFrame.Shadow.Raised)
-
-            hlayout = QHBoxLayout()
-            hlayout.setContentsMargins(0, 0, 0, 0)
-            hlayout.setAlignment(Qt.AlignmentFlag.AlignVCenter |
-                                 Qt.AlignmentFlag.AlignTop)
-            hlayout.addWidget(QLabel("Hello World"))
+            self.setFrameShadow(QFrame.Shadow.Sunken)
 
             layout = QVBoxLayout()
             layout.setAlignment(Qt.AlignmentFlag.AlignTop)
@@ -269,5 +263,51 @@ class EmployeeChart(QFrame):
             label.setObjectName("header2_underline")
 
             layout.addWidget(label)
+            self.__set_frame(layout)
 
             self.setLayout(layout)
+
+        def __set_frame(self, layout: QVBoxLayout):
+            grid = QGridLayout()
+
+            row = col = 0
+            count = Employee().get_count()
+            li = []
+
+            for i in range(count):
+                li.append(self.__Employee_frame())
+                if count % 2 == 0:
+                    if col == 4:
+                        row += 1
+                        col = 0
+                else:
+                    if col == 3:
+                        row += 1
+                        col = 0
+
+                grid.addWidget(li[i], row, col)
+                col += 1
+
+            layout.addLayout(grid)
+
+        class __Employee_frame(QFrame):
+            def __init__(self) -> None:
+                super().__init__()
+
+                self.setFrameShape(QFrame.Shape.WinPanel)
+                self.setFrameShadow(QFrame.Shadow.Raised)
+
+                self.setContentsMargins(8, 4, 8, 4)
+                self.setSizePolicy(
+                    QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Minimum)
+
+                main_layout = QVBoxLayout()
+
+                label = QLabel("Name")
+                label.setAlignment(Qt.AlignmentFlag.AlignTop |
+                                   Qt.AlignmentFlag.AlignHCenter)
+                label.setObjectName("header2_underline")
+
+                main_layout.addWidget(label)
+
+                self.setLayout(main_layout)

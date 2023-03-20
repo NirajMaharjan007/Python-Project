@@ -11,31 +11,96 @@ import panels.layouts as lay
 class AboutDialog(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowFlags(self.windowFlags() |
-                            Qt.WindowType.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
+
+        self.setWindowTitle("About us")
+        self.setWindowIcon(QIcon("./resources/about-us-22-32.png"))
         with open("./styles/custom.css") as f:
             style = f.read()
             self.setStyleSheet(style)
+
         layout = QVBoxLayout()
-        hlayout = QHBoxLayout()
+        layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        inner_layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignmentFlag.AlignTop |
+                            Qt.AlignmentFlag.AlignVCenter)
 
         team = QLabel("Teams:")
+        team.setAlignment(Qt.AlignmentFlag.AlignTop |
+                          Qt.AlignmentFlag.AlignHCenter)
         team.setObjectName("header")
-        layout.addWidget(team)
 
-        hlayout.addWidget(QLabel("Niraj maharjan"))
-        layout.addLayout(hlayout)
+        inner_layout.addWidget(team)
+        self.__info(inner_layout)
 
+        layout.addLayout(inner_layout)
         self.setLayout(layout)
-        self.setFixedSize(256, 128)
-        self.adjustSize()
+
+    def __info(self, layout: QBoxLayout):
+        row = col = 0
+        grid = QGridLayout()
+
+        li = []
+        name = ["Binita Lamichhane", "Jenisha Karki",
+                "Niraj Maharjan", "Ruses Maharjan", "Samir Maharjan"]
+
+        gender = ["Female", "Female", "Male", "Not Found", "Not Found"]
+
+        ph = ["9808280005", "9840259835",
+              "9813545029", "Not Found", "9813498649"]
+
+        email = ["Lamichhanebinita23@gmail.com",
+                 "jenishakarki8@gmail.com", "niraj.mhrjn770@gmail.com", "pandamaharjan@gmail.com",
+                 "sameermaharjan982@gmail.com"]
+
+        for i in range(5):
+            li.append(self.__InfoWidget(name[i], gender[i], ph[i], email[i]))
+
+            if col == 3:
+                col = 0
+                row += 1
+
+            grid.addWidget(li[i], row, col)
+            col += 1
+
+        layout.addLayout(grid)
+
+    class __InfoWidget(QFrame):
+        def __init__(self, name, gender, phone, email):
+            super().__init__()
+            self.setFrameShape(QFrame.Shape.WinPanel)
+            self.setFrameShadow(QFrame.Shadow.Raised)
+            self.setContentsMargins(4, 2, 4, 2)
+            self.setSizePolicy(
+                QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Minimum)
+
+            main_layout = QVBoxLayout()
+            main_layout.setContentsMargins(4, 0, 4, 0)
+
+            header = QLabel("Team information")
+            header.setAlignment(Qt.AlignmentFlag.AlignCenter |
+                                Qt.AlignmentFlag.AlignTop)
+            header.setObjectName("header2_underline")
+
+            name_label = QLabel("Name: "+str(name))
+            gender_label = QLabel("Gender: "+str(gender))
+            ph_label = QLabel("Ph no.: "+str(phone))
+            email_label = QLabel("Email: "+str(email))
+
+            main_layout.addWidget(header)
+            main_layout.addWidget(name_label)
+            main_layout.addWidget(ph_label)
+            main_layout.addWidget(email_label)
+            main_layout.addWidget(gender_label)
+
+            self.setLayout(main_layout)
 
 
 class AdminDialog(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowFlags(self.windowFlags() |
-                            Qt.WindowType.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
 
         with open("./styles/custom.css") as f:
             style = f.read()
@@ -60,7 +125,7 @@ class AdminDialog(QDialog):
 class EmployeeDialog(QDialog):
     __table: lay.TableDisplay
 
-    @staticmethod
+    @ staticmethod
     def set_tableWidget(table=lay.TableDisplay):
         EmployeeDialog.__table = table
 
