@@ -1,62 +1,63 @@
-QWidget {
-  background-color: rgb(225, 225, 225);
-  color: #282828;
-  font-size: 14px;
-}
+ QWidget {
+   background-color: rgb(225, 225, 225);
+   color: #282828;
+   font-size: 14px;
+   font-family: sans-serif;
+ }
 
-#form-control {
-  width: fit-content;
-  padding: 2px 4px;
-  line-height: 1.5;
-  border: 1px solid #282828;
-  border-radius: 2px;
-}
+ #form-control {
+   width: fit-content;
+   padding: 2px 4px;
+   line-height: 1.5;
+   border: 1px solid #282828;
+   border-radius: 2px;
+ }
 
-QLabel {
-  margin-top: 0.25rem;
-  margin-bottom: 0.5rem;
-}
+ QLabel {
+   margin-top: 0.25rem;
+   margin-bottom: 0.5rem;
+ }
 
-QPushButton {
-  padding: 2px 4px;
-  width: max-content;
-  height: 100%;
-}
+ QPushButton {
+   padding: 2px 4px;
+   width: max-content;
+   height: 100%;
+ }
 
-#login {
-  color: #fff;
-  background-color: #248544;
-  border-color: #28a745;
-}
+ #login {
+   color: #fff;
+   background-color: #248544;
+   border-color: #28a745;
+ }
 
-#login:hover {
-  color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34;
-}
+ #login:hover {
+   color: #fff;
+   background-color: #218838;
+   border-color: #1e7e34;
+ }
 
-#login.disabled,
-#login:disabled {
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-}
+ #login.disabled,
+ #login:disabled {
+   color: #fff;
+   background-color: #28a745;
+   border-color: #28a745;
+ }
 
-#cancel {
-  color: #fff;
-  background-color: #b90c1d;
-  border-color: #dc3545;
-}
+ #cancel {
+   color: #fff;
+   background-color: #b90c1d;
+   border-color: #dc3545;
+ }
 
-#cancel:hover {
-  color: #fff;
-  background-color: #c82333;
-  border-color: #bd2130;
-}
+ #cancel:hover {
+   color: #fff;
+   background-color: #c82333;
+   border-color: #bd2130;
+ }
 
-#cancel.disabled,
-#cancel:disabled {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
+ #cancel.disabled,
+ #cancel:disabled {
+   color: #fff;
+   background-color: #dc3545;
+   border-color: #dc3545;
+ }

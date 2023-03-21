@@ -1,135 +1,135 @@
-QWidget,
-QDialog {
-  background-color: rgb(230, 230, 230);
-  color: #212529;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0;
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+ QWidget,
+ QDialog {
+   background-color: rgb(230, 230, 230);
+   color: #212529;
+   font-size: 14px;
+   line-height: 1.5;
+   margin: 0;
+   font-family: sans-serif;
+ }
 
-#header {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-}
+ #header {
+   font-size: 20px;
+   font-weight: bold;
+   margin-top: 0;
+   margin-bottom: 0.8rem;
+ }
 
-#header2,
-#header2_underline {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-}
+ #header2,
+ #header2_underline {
+   font-size: 18px;
+   font-weight: bold;
+   margin-top: 0;
+   margin-bottom: 0.8rem;
+ }
 
-#header2_underline {
-  text-decoration: underline;
-}
+ #header2_underline {
+   text-decoration: underline;
+ }
 
-QLabel {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  padding: 0.45em 1px;
-  height: fit-content;
-  text-align: justify;
-}
+ QLabel {
+   margin-top: 0;
+   margin-bottom: 1rem;
+   padding: 0.45em 1px;
+   height: fit-content;
+   text-align: justify;
+ }
 
-QMenuBar,
-QMenu,
-QAction {
-  border: 1px solid #212529;
-  padding: 1px 2px;
-  margin: 0;
-}
+ QMenuBar,
+ QMenu,
+ QAction {
+   border: 1px solid #212529;
+   padding: 1px 2px;
+   margin: 0;
+ }
 
-QDialog {
-  padding: 4px 2px;
-}
+ QDialog {
+   padding: 4px 2px;
+ }
 
-QPushButton {
-  padding: 2px;
-  width: fit-content;
-}
+ QPushButton {
+   padding: 2px;
+   width: fit-content;
+ }
 
-QMenuBar::item:selected,
-QMenu::item:selected,
-QAction::item:selected {
-  border: 1px solid #b4e4ff;
-  background-color: #95bdff;
-  padding: 1.26px 1.2px;
-  margin: 0;
-}
+ QMenuBar::item:selected,
+ QMenu::item:selected,
+ QAction::item:selected {
+   border: 1px solid #b4e4ff;
+   background-color: #95bdff;
+   padding: 1.26px 1.2px;
+   margin: 0;
+ }
 
-#update {
-  color: #fff;
-  background-color: #248544;
-  border-color: #28a745;
-}
+ #update {
+   color: #fff;
+   background-color: #248544;
+   border-color: #28a745;
+ }
 
-#update:hover {
-  color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34;
-}
+ #update:hover {
+   color: #fff;
+   background-color: #218838;
+   border-color: #1e7e34;
+ }
 
-#update.disabled,
-#update:disabled {
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-}
+ #update.disabled,
+ #update:disabled {
+   color: #fff;
+   background-color: #28a745;
+   border-color: #28a745;
+ }
 
-#delete {
-  color: #fff;
-  background-color: #b90c1d;
-  border-color: #dc3545;
-}
+ #delete {
+   color: #fff;
+   background-color: #b90c1d;
+   border-color: #dc3545;
+ }
 
-#delete:hover {
-  color: #fff;
-  background-color: #c82333;
-  border-color: #bd2130;
-}
+ #delete:hover {
+   color: #fff;
+   background-color: #c82333;
+   border-color: #bd2130;
+ }
 
-#delete.disabled,
-#delete:disabled {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
+ #delete.disabled,
+ #delete:disabled {
+   color: #fff;
+   background-color: #dc3545;
+   border-color: #dc3545;
+ }
 
-#info {
-  color: #fff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
-}
+ #info {
+   color: #fff;
+   background-color: #17a2b8;
+   border-color: #17a2b8;
+ }
 
-#info:hover {
-  color: #fff;
-  background-color: #138496;
-  border-color: #117a8b;
-}
+ #info:hover {
+   color: #fff;
+   background-color: #138496;
+   border-color: #117a8b;
+ }
 
-#info.disabled,
-#info:disabled {
-  color: #fff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
-}
+ #info.disabled,
+ #info:disabled {
+   color: #fff;
+   background-color: #17a2b8;
+   border-color: #17a2b8;
+ }
 
-#refresh {
-  color: #000;
-  border-color: #97DEFF;
-  background-color: #97DEFF;
-}
+ #refresh {
+   color: #000;
+   border-color: #97DEFF;
+   background-color: #97DEFF;
+ }
 
-#refresh:hover {
-  background-color: #C9EEFF;
-  border-color: #C9EEFF;
-}
+ #refresh:hover {
+   background-color: #C9EEFF;
+   border-color: #C9EEFF;
+ }
 
-#bold-font {
-  font-size: 14px;
-  font-weight: bold;
-}
+ #bold-font {
+   font-size: 14px;
+   font-weight: bold;
+ }

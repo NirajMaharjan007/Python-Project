@@ -84,13 +84,16 @@ class TableDisplay(QTableWidget):
             super().__init__()
 
             cell_layout = QHBoxLayout()
+
             self.update = QPushButton("Edit")
             self.update.setObjectName("update")
             self.update.clicked.connect(self.__edit)
+            self.update.adjustSize()
 
             self.delete = QPushButton("Delete")
             self.delete.setObjectName("delete")
             self.delete.clicked.connect(self.__delete)
+            self.delete.adjustSize()
 
             cell_layout.addWidget(self.update)
             cell_layout.addWidget(self.delete)
