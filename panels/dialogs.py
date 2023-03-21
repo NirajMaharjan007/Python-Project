@@ -83,16 +83,28 @@ class AboutDialog(QDialog):
                                 Qt.AlignmentFlag.AlignTop)
             header.setObjectName("header2_underline")
 
-            name_label = QLabel("Name: "+str(name))
-            gender_label = QLabel("Gender: "+str(gender))
-            ph_label = QLabel("Ph no.: "+str(phone))
-            email_label = QLabel("Email: "+str(email))
+            inner_layout = QFormLayout()
+
+            name_label = QLabel("Name: ")
+            name_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+            name_label.setObjectName("bold-font")
+
+            gender_label = QLabel("Gender: ")
+            gender_label.setObjectName("bold-font")
+
+            ph_label = QLabel("Ph no.: ")
+            ph_label.setObjectName("bold-font")
+
+            email_label = QLabel("Email: ")
+            email_label.setObjectName("bold-font")
+
+            inner_layout.addRow(name_label, QLabel(name))
+            inner_layout.addRow(ph_label, QLabel(phone))
+            inner_layout.addRow(email_label, QLabel(email))
+            inner_layout.addRow(gender_label, QLabel(gender))
 
             main_layout.addWidget(header)
-            main_layout.addWidget(name_label)
-            main_layout.addWidget(ph_label)
-            main_layout.addWidget(email_label)
-            main_layout.addWidget(gender_label)
+            main_layout.addLayout(inner_layout)
 
             self.setLayout(main_layout)
 
