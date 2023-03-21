@@ -121,10 +121,15 @@ QAction::item:selected {
 #refresh {
   color: #000;
   border-color: #97DEFF;
-  background-color: #97DEFF; 
+  background-color: #97DEFF;
 }
 
 #refresh:hover {
   background-color: #C9EEFF;
   border-color: #C9EEFF;
+}
+
+#bold-font {
+  font-size: 14px;
+  font-weight: bold;
 }
