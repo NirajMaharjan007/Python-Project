@@ -269,8 +269,8 @@ class EmployeeChart(QFrame):
 
         def __set_frame(self, layout: QVBoxLayout):
             grid = QGridLayout()
-            grid.setAlignment(Qt.AlignmentFlag.AlignTop |
-                              Qt.AlignmentFlag.AlignLeading)
+            grid.setAlignment(Qt.AlignmentFlag.AlignLeading |
+                              Qt.AlignmentFlag.AlignJustify)
             grid.setContentsMargins(2, 4, 2, 8)
 
             row = col = 0
