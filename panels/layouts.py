@@ -269,13 +269,22 @@ class EmployeeChart(QFrame):
 
         def __set_frame(self, layout: QVBoxLayout):
             grid = QGridLayout()
+            grid.setAlignment(Qt.AlignmentFlag.AlignTop |
+                              Qt.AlignmentFlag.AlignLeading)
+            grid.setContentsMargins(2, 4, 2, 8)
 
             row = col = 0
             count = Employee().get_count()
+
             li = []
+            emp_detail = Employee().get_employee_detail()
 
             for i in range(count):
-                li.append(self.__Employee_frame())
+                if emp_detail is not None:
+                    print(emp_detail[i][0])
+                    li.append(self.__Employee_frame(
+                        emp_detail[i][0], emp_detail[i][1]))
+
                 if count % 2 == 0:
                     if col == 4:
                         row += 1
@@ -291,23 +300,43 @@ class EmployeeChart(QFrame):
             layout.addLayout(grid)
 
         class __Employee_frame(QFrame):
-            def __init__(self) -> None:
+            def __init__(self, emp_id: int, name: str) -> None:
                 super().__init__()
 
                 self.setFrameShape(QFrame.Shape.WinPanel)
                 self.setFrameShadow(QFrame.Shadow.Raised)
 
                 self.setContentsMargins(8, 4, 8, 4)
-                self.setSizePolicy(
-                    QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Minimum)
+                self.setSizePolicy(QSizePolicy.Policy.Minimum,
+                                   QSizePolicy.Policy.Minimum)
 
                 main_layout = QVBoxLayout()
+                inner_layout = QFormLayout()
+                hlayout = QHBoxLayout()
+                hlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-                label = QLabel("Name")
+                label = QLabel("Employee Info")
                 label.setAlignment(Qt.AlignmentFlag.AlignTop |
                                    Qt.AlignmentFlag.AlignHCenter)
                 label.setObjectName("header2_underline")
 
+                emp_id_label = QLabel("Employee Id:")
+                emp_id_label.setObjectName("bold-font")
+
+                emp_name = QLabel("Name: ")
+                emp_name.setObjectName("bold-font")
+
+                inner_layout.addRow(emp_id_label, QLabel(str(emp_id)))
+                inner_layout.addRow(emp_name, QLabel(str(name)))
+
+                btn = QPushButton("Click Me")
+                btn.setFixedSize(70, 30)
+                btn.clicked.connect(lambda: print("Pressed and clicked"))
+
+                hlayout.addWidget(btn)
+
                 main_layout.addWidget(label)
+                main_layout.addLayout(inner_layout)
+                main_layout.addLayout(hlayout)
 
                 self.setLayout(main_layout)

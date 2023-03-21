@@ -55,7 +55,8 @@ class AboutDialog(QDialog):
                  "sameermaharjan982@gmail.com"]
 
         for i in range(5):
-            li.append(self.__InfoWidget(name[i], gender[i], ph[i], email[i]))
+            li.append(self.__InfoWidget(i+1, name[i],
+                                        gender[i], ph[i], email[i]))
 
             if col == 3:
                 col = 0
@@ -67,7 +68,7 @@ class AboutDialog(QDialog):
         layout.addLayout(grid)
 
     class __InfoWidget(QFrame):
-        def __init__(self, name, gender, phone, email):
+        def __init__(self, counter: int, name, gender, phone, email):
             super().__init__()
             self.setFrameShape(QFrame.Shape.WinPanel)
             self.setFrameShadow(QFrame.Shadow.Raised)
@@ -78,7 +79,7 @@ class AboutDialog(QDialog):
             main_layout = QVBoxLayout()
             main_layout.setContentsMargins(4, 0, 4, 0)
 
-            header = QLabel("Team information")
+            header = QLabel(str(counter)+". Team information")
             header.setAlignment(Qt.AlignmentFlag.AlignCenter |
                                 Qt.AlignmentFlag.AlignTop)
             header.setObjectName("header2_underline")
@@ -86,7 +87,6 @@ class AboutDialog(QDialog):
             inner_layout = QFormLayout()
 
             name_label = QLabel("Name: ")
-            name_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
             name_label.setObjectName("bold-font")
 
             gender_label = QLabel("Gender: ")
