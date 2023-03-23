@@ -1,10 +1,12 @@
 from random import randint
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt, QFile
-from data.database import Employee
+from PyQt6.QtCore import Qt
+
 from datetime import datetime
 
+from data.database import Employee
+from data.csvFile import WriteFile
 import panels.layouts as lay
 
 
@@ -231,6 +233,8 @@ class EmployeeDialog(QDialog):
                 raise Exception("The Text field should not be blank")
 
             elif self.emp.set_employee(emp_id, name, address, email, dob, gender, phone):
+                WriteFile.write_into_csv(emp_id, name)
+
                 list = [emp_id, name, address, email,
                         dob, gender, phone]
                 row_position = self.__table.rowCount()

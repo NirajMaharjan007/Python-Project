@@ -7,7 +7,11 @@ filename = './resources/file_data.csv'
 
 class WriteFile:
     def __init__(self) -> None:
-        print("tested")
+        f = open("demofile2.txt", "w")
+        f.write("\n")
+        f.close()
+
+        self.test = randint(1, 30)
 
     @staticmethod
     def write_into_csv(emp_id=int, emp_name=str):
@@ -16,7 +20,7 @@ class WriteFile:
             writer.writerow([emp_id, emp_name])
 
 
-class Reader:
+class ReaderFile:
     def __init__(self,   emp_id=int, emp_name=str) -> None:
         print("Reader")
         self.emp_id = emp_id
@@ -25,7 +29,3 @@ class Reader:
     def read(self):
         df = pd.read_csv(filename)
         print(df)
-
-
-reader = Reader(182, "niraj")
-reader.read()
