@@ -282,8 +282,8 @@ class EmployeeChart(QFrame):
             for i in range(count):
                 if emp_detail is not None:
                     print(emp_detail[i][0])
-                    li.append(self.__Employee_frame(emp_detail[i][0], 
-                                                emp_detail[i][1]))
+                    li.append(self.__Employee_frame(emp_detail[i][0],
+                                                    emp_detail[i][1]))
 
                 if count % 2 == 0:
                     if col == 4:
@@ -331,7 +331,7 @@ class EmployeeChart(QFrame):
 
                 btn = QPushButton("Click Me")
                 btn.setFixedSize(70, 30)
-                btn.clicked.connect(lambda: print("Pressed and clicked"))
+                btn.clicked.connect(lambda: print("Show chart"))
 
                 hlayout.addWidget(btn)
 
