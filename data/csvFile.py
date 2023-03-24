@@ -3,28 +3,33 @@ import pandas as pd
 from random import randint
 
 filename = './resources/file_data.csv'
+file_present = './resources/present.csv'
 
 
 class WriteFile:
-    def __init__(self) -> None:
-        f = open("demofile2.txt", "w")
-        f.write("\n")
-        f.close()
-
-        self.test = randint(1, 30)
-
     @staticmethod
-    def write_into_csv(emp_id=int, emp_name=str):
+    def write_into_csv(emp_id: int) -> None:
+        months = []
+        for _ in range(12):
+            months.append(randint(1, 12))
+
+        row_data = emp_id + months
+
         with open(filename, 'a', newline='\n') as file:
             writer = csv.writer(file)
-            writer.writerow([emp_id, emp_name])
+            writer.writerow(row_data)
+
+        with open(file_present, 'a', newline='\n') as file:
+            present = randint(2, 90)
+            absent = randint(0, 20)
+            writer = csv.writer(file)
+            writer.writerow([emp_id, present, absent])
 
 
 class ReaderFile:
-    def __init__(self,   emp_id=int, emp_name=str) -> None:
+    def __init__(self,   emp_id: int) -> None:
         print("Reader")
         self.emp_id = emp_id
-        self.emp_name = emp_name
 
     def read(self):
         df = pd.read_csv(filename)

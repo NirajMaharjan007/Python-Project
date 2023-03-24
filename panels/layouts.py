@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from data.database import get_login
-from data.matplot import BarGraph
+from data.matplot import *
 from panels.tables import *
 import panels.dialogs as dialog
 from sys import exit
@@ -44,9 +44,6 @@ class Container(QVBoxLayout):
         inside_frame.setLayout(hlayout)
 
         vlayout.addWidget(employee_frame)
-
-        # self.addWidget(inside_frame)
-        # self.addWidget(employee_frame)
 
         tab.addTab(inside_frame, "Main Tab")
         tab.addTab(employee_perform, "Performance")
@@ -333,11 +330,16 @@ class EmployeeChart(QFrame):
                 inner_layout.addRow(emp_id_label, QLabel(str(emp_id)))
                 inner_layout.addRow(emp_name, QLabel(str(name)))
 
-                btn = QPushButton("Show chart")
+                btn = QPushButton("Bar-Diagram")
                 btn.setFixedWidth(100)
                 btn.clicked.connect(self.__show_chart)
 
+                pie = QPushButton("Attendence")
+                pie.setFixedWidth(120)
+                pie.clicked.connect(self.__show_attendence)
+
                 hlayout.addWidget(btn)
+                hlayout.addWidget(pie)
 
                 main_layout.addWidget(label)
                 main_layout.addLayout(inner_layout)
@@ -346,5 +348,9 @@ class EmployeeChart(QFrame):
                 self.setLayout(main_layout)
 
             def __show_chart(self):
-                chart = BarGraph(self.emp_id, self.name)
+                chart = Graph(self.emp_id, self.name)
                 chart.plot()
+
+            def __show_attendence(self):
+                pie_char = PieChart(self.emp_id, self.name)
+                pie_char.plot()
