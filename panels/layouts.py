@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from data.database import get_login
+from data.matplot import BarGraph
 from panels.tables import *
 import panels.dialogs as dialog
 from sys import exit
@@ -301,6 +302,9 @@ class EmployeeChart(QFrame):
 
         class __Employee_frame(QFrame):
             def __init__(self, emp_id: int, name: str) -> None:
+                self.emp_id = emp_id
+                self.name = name
+
                 super().__init__()
 
                 self.setFrameShape(QFrame.Shape.WinPanel)
@@ -329,9 +333,9 @@ class EmployeeChart(QFrame):
                 inner_layout.addRow(emp_id_label, QLabel(str(emp_id)))
                 inner_layout.addRow(emp_name, QLabel(str(name)))
 
-                btn = QPushButton("Click Me")
-                btn.setFixedSize(70, 30)
-                btn.clicked.connect(lambda: print("Show chart"))
+                btn = QPushButton("Show chart")
+                btn.setFixedWidth(100)
+                btn.clicked.connect(self.__show_chart)
 
                 hlayout.addWidget(btn)
 
@@ -340,3 +344,7 @@ class EmployeeChart(QFrame):
                 main_layout.addLayout(hlayout)
 
                 self.setLayout(main_layout)
+
+            def __show_chart(self):
+                chart = BarGraph(self.emp_id, self.name)
+                chart.plot()
