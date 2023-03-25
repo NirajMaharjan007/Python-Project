@@ -267,7 +267,7 @@ class EmployeeChart(QFrame):
 
         def __set_frame(self, layout: QVBoxLayout):
             grid = QGridLayout()
-            grid.setAlignment(Qt.AlignmentFlag.AlignLeading |
+            grid.setAlignment(Qt.AlignmentFlag.AlignTop |
                               Qt.AlignmentFlag.AlignJustify)
             grid.setContentsMargins(2, 4, 2, 8)
 
@@ -280,8 +280,8 @@ class EmployeeChart(QFrame):
             for i in range(count):
                 if emp_detail is not None:
                     print(emp_detail[i][0])
-                    li.append(self.__Employee_frame(emp_detail[i][0],
-                                                    emp_detail[i][1]))
+                    li.append(self.__Employee_frame(
+                        (i+1), emp_detail[i][0], emp_detail[i][1]))
 
                 if count % 2 == 0:
                     if col == 4:
@@ -298,7 +298,7 @@ class EmployeeChart(QFrame):
             layout.addLayout(grid)
 
         class __Employee_frame(QFrame):
-            def __init__(self, emp_id: int, name: str) -> None:
+            def __init__(self, count: int, emp_id: int, name: str) -> None:
                 self.emp_id = emp_id
                 self.name = name
 
@@ -308,7 +308,7 @@ class EmployeeChart(QFrame):
                 self.setFrameShadow(QFrame.Shadow.Raised)
 
                 self.setContentsMargins(8, 4, 8, 4)
-                self.setSizePolicy(QSizePolicy.Policy.Minimum,
+                self.setSizePolicy(QSizePolicy.Policy.MinimumExpanding,
                                    QSizePolicy.Policy.Minimum)
 
                 main_layout = QVBoxLayout()
@@ -316,7 +316,7 @@ class EmployeeChart(QFrame):
                 hlayout = QHBoxLayout()
                 hlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-                label = QLabel("Employee Info")
+                label = QLabel(str(count) + ". Employee Info")
                 label.setAlignment(Qt.AlignmentFlag.AlignTop |
                                    Qt.AlignmentFlag.AlignHCenter)
                 label.setObjectName("header2_underline")

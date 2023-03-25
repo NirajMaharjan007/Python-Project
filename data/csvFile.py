@@ -13,11 +13,11 @@ class WriteFile:
         for _ in range(12):
             months.append(randint(1, 12))
 
-        months_str = ",".join(str(m) for m in months)
+        data = str(emp_id)+"".join(str(m) for m in months)
 
         with open(filename, 'a', newline='\n') as file:
             writer = csv.writer(file)
-            writer.writerow([emp_id, months_str])
+            writer.writerow(data)
 
         with open(file_present, 'a', newline='\n') as file:
             present = randint(2, 90)
