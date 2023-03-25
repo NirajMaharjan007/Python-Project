@@ -314,7 +314,8 @@ class EmployeeChart(QFrame):
                 main_layout = QVBoxLayout()
                 inner_layout = QFormLayout()
                 hlayout = QHBoxLayout()
-                hlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                hlayout.setAlignment(Qt.AlignmentFlag.AlignLeft |
+                                     Qt.AlignmentFlag.AlignBaseline)
 
                 label = QLabel(str(count) + ". Employee Info")
                 label.setAlignment(Qt.AlignmentFlag.AlignTop |
