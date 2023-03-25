@@ -8,16 +8,16 @@ file_present = './resources/present.csv'
 
 class WriteFile:
     @staticmethod
-    def write_into_csv(emp_id: int) -> None:
+    def write_into_csv(emp_id) -> None:
         months = []
         for _ in range(12):
             months.append(randint(1, 12))
 
-        row_data = emp_id + months
+        months_str = ",".join(str(m) for m in months)
 
         with open(filename, 'a', newline='\n') as file:
             writer = csv.writer(file)
-            writer.writerow(row_data)
+            writer.writerow([emp_id, months_str])
 
         with open(file_present, 'a', newline='\n') as file:
             present = randint(2, 90)

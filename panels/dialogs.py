@@ -233,7 +233,7 @@ class EmployeeDialog(QDialog):
                 raise Exception("The Text field should not be blank")
 
             elif self.emp.set_employee(emp_id, name, address, email, dob, gender, phone):
-                WriteFile.write_into_csv(emp_id, name)
+                WriteFile.write_into_csv(emp_id)
 
                 list = [emp_id, name, address, email,
                         dob, gender, phone]
