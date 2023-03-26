@@ -45,7 +45,6 @@ class Menu(QMenuBar):
 
         self.layout.setMenuBar(self)
 
-        admin_bar = self.addMenu('Admin')
         option_bar = self.addMenu('Option')
 
         about_us = QAction("About us", self.fr)
@@ -57,8 +56,6 @@ class Menu(QMenuBar):
         logout = QAction('Logout', self.fr)
         logout.triggered.connect(lambda: {self.fr.setVisible(False),
                                           self.login_frame.setVisible(True)})
-
-        admin_bar.addAction(admin_info)
 
         option_bar.addAction(about_us)
         option_bar.addAction(logout)
